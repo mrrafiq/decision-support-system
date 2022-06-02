@@ -1,10 +1,19 @@
 <div
     class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar justify-between">
     <div class="overflow-y-auto overflow-x-hidden flex flex-col flex-grow">
-        <div class="flex flex-col mt-3 text-center">
-            <img src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp" alt="" class="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28">
-            <h5 class="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Cynthia J. Watts</h5>
-            <span class="hidden text-gray-400 lg:block">Admin</span>
+        <div class="flex flex-col mt-3 mb-6 text-center">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-circle"
+                class="w-10 h-10 m-auto rounded-full object-cover lg:w-20 lg:h-20" role="img"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                <path fill="currentColor"
+                    d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z">
+                </path>
+            </svg>
+            <h5 class="hidden mt-4 text-xl font-semibold text-neutral-50 lg:block">{{ Auth::user()->username }}</h5>
+            <a href="{{ route('logout') }}" class="mt-2 hidden md:block">
+                <strong
+                    class="border border-red-500 text-red-500 bg-transparent px-5 py-1.5 rounded-full inset-x-6 text-[10px] hover:bg-red-200">Logout</strong>
+            </a>
         </div>
         <ul class="flex flex-col space-y-1">
             <li class="px-5 hidden md:block">
@@ -13,8 +22,8 @@
                 </div>
             </li>
             <li>
-                <a href="#"
-                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ ($title == 'Dashboard') ? 'border-gray-800 text-white-800 bg-gray-600' : ''}}">
+                <a href="{{ route('dashboard') }}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Dashboard' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
                     <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -27,19 +36,14 @@
                 </a>
             </li>
             <li>
-                <a href="#"
-                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                <a href="{{ route('decision-maker') }}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Decision Maker' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
                     <span class="inline-flex justify-center items-center ml-4">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-                            </path>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
                     </span>
-                    <span class="ml-2 text-sm tracking-wide truncate">Board</span>
-                    <span
-                        class="hidden md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-blue-500 bg-indigo-50 rounded-full">New</span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Decision Maker</span>
                 </a>
             </li>
             <li>

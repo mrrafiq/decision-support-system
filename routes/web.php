@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\DecisionMakerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +28,11 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth']],function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('decision-maker')->group(function () {
+        Route::get('/', [DecisionMakerController::class, 'index'])->name('decision-maker');
+        Route::get('/create', [DecisionMakerController::class, 'create'])->name('create-decision-maker');
+        Route::post('/store', [DecisionMakerController::class, 'store'])->name('store-decision-maker');
+        Route::delete('/destroy/{id}', [DecisionMakerController::class, 'destroy'])->name('destroy-decision-maker');
+    });
 });
