@@ -23,7 +23,7 @@
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
                         Created at
                     </th>
-                    <th>
+                    <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                         Action
                     </th>
                 </tr>
@@ -42,7 +42,7 @@
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">{{ $data->created_at }}</td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                         <div class="flex flex-inline place-content-center">
-                            <a href="#">
+                            <a href="{{url('decision-maker/edit/'.$data->id)}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500 hover:scale-125 mr-4"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"

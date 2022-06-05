@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth']],function () {
         Route::get('/', [DecisionMakerController::class, 'index'])->name('decision-maker');
         Route::get('/create', [DecisionMakerController::class, 'create'])->name('create-decision-maker');
         Route::post('/store', [DecisionMakerController::class, 'store'])->name('store-decision-maker');
+        Route::get('/edit/{id}', [DecisionMakerController::class, 'edit'])->name('edit-decision-maker');
+        Route::post('/update/{id}', [DecisionMakerController::class, 'update'])->name('update-decision-maker');
         Route::delete('/destroy/{id}', [DecisionMakerController::class, 'destroy'])->name('destroy-decision-maker');
     });
 });

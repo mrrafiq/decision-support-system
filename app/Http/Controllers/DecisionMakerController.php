@@ -70,16 +70,13 @@ class DecisionMakerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $this->validate($request, [
-            'name' => 'required'
+        $data = DecisionMaker::where('id', $id)->first();
+        return view('decision-maker.edit', [
+            'data' => $data,
+            'title' => 'Edit Decision Maker'
         ]);
-
-        $decision_maker = DecisionMaker::where('id', $request->id)->first();
-        $decision_maker->name = $request->name;
-        $decision_maker->save();
-        return redirect('/decision-maker');
     }
 
     /**
@@ -91,7 +88,15 @@ class DecisionMakerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:decision_makers,name'
+        ]);
+
+        $decision_maker = DecisionMaker::findOrFail($id);
+        $decision_maker->name = $request->name;
+        $decision_maker->user_id = Auth::user()->id;
+        $decision_maker->save($request->all());
+        return redirect('/decision-maker');
     }
 
     /**
