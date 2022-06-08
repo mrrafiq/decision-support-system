@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\School;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -26,7 +28,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'read_decision_maker']);
         Permission::create(['name' => 'delete_decision_maker']);
 
-        //Permission for Pondok Pesantren
+        //Permission for School
         Permission::create(['name' => 'create_school']);
         Permission::create(['name' => 'update_school']);
         Permission::create(['name' => 'read_school']);
@@ -50,6 +52,19 @@ class DatabaseSeeder extends Seeder
             'read_decision_maker',
             'delete_decision_maker'
         ]);
+
+        $school = new School;
+        $school->name = 'MA Ar-risalah';
+        $school->save();
+
+        Category::create(['name' => 'Deskripsi']);
+        Category::create(['name' => 'Gambar']);
+        Category::create(['name' => 'Visi dan Misi']);
+        Category::create(['name' => 'Kurikulum']);
+        Category::create(['name' => 'Biaya']);
+        Category::create(['name' => 'Program Unggulan']);
+        Category::create(['name' => 'Fasilitas']);
+        Category::create(['name' => 'Ekstrakurikuler']);
 
     }
 }
