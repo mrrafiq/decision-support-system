@@ -1,13 +1,13 @@
 @extends('layout/main')
 @section('main')
     <div>
-        <p class="text-4xl">Add Decision Maker</p>
+        <p class="text-4xl">Edit Decision Maker</p>
     </div>
     <div class="mt-12">
-        <form action="{{ route('store-decision-maker') }}" method="POST">
+        <form action="{{ url('decision-maker/update/'.$data->id) }}" method="POST">
             {{ csrf_field() }}
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl w-4/5">
-                <input id="name" class=" pl-2 w-full outline-none border-none" type="text" name="name" placeholder="Name"
+                <input id="name" class=" pl-2 w-full outline-none border-none" type="text" name="name" value="{{$data->name}}" placeholder="Name"
                     required />
             </div>
             <div class="flex items-center justify-between w-4/5">
