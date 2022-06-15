@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakerController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\SchoolDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +38,19 @@ Route::group(['middleware' => ['auth']],function () {
         Route::get('/edit/{id}', [DecisionMakerController::class, 'edit'])->name('edit-decision-maker');
         Route::post('/update/{id}', [DecisionMakerController::class, 'update'])->name('update-decision-maker');
         Route::delete('/destroy/{id}', [DecisionMakerController::class, 'destroy'])->name('destroy-decision-maker');
+    });
+
+    Route::prefix('school')->group(function () {
+        Route::get('/', [SchoolController::class, 'index'])->name('school');
+        ROute::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
+        Route::get('/create', [SchoolController::class, 'create'])->name('create-school');
+        Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->name('create-detail');
+        Route::post('/store', [SchoolController::class, 'store'])->name('store-school');
+        Route::post('/store-detail/{id}', [SchoolDetailController::class, 'store'])->name('store-detail');
+        Route::get('/edit/{id}', [SchoolController::class, 'edit'])->name('edit-school');
+        Route::get('/edit-detail/{id}', [SchoolDetailController::class, 'edit'])->name('edit-detail');
+        Route::post('/update/{id}', [SchoolController::class, 'update'])->name('update-school');
+        Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->name('update-detail');
+        Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->name('destroy-school');
     });
 });

@@ -30,7 +30,7 @@ class DecisionMakerController extends Controller
     public function create()
     {
         return view('/decision-maker/create',[
-            'title' => 'Create Decision Maker'
+            'title' => 'Decision Maker'
         ]);
     }
 
@@ -75,7 +75,7 @@ class DecisionMakerController extends Controller
         $data = DecisionMaker::where('id', $id)->first();
         return view('decision-maker.edit', [
             'data' => $data,
-            'title' => 'Edit Decision Maker'
+            'title' => 'Decision Maker'
         ]);
     }
 
