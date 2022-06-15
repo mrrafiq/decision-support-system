@@ -17,7 +17,7 @@ class SchoolController extends Controller
 
     public function create()
     {
-        return view('school.create', ['title' => 'Create School']);
+        return view('school.create', ['title' => 'School']);
     }
 
     public function store(Request $request)
@@ -27,6 +27,27 @@ class SchoolController extends Controller
         ]);
 
         $school = new School;
+        $school->name = $request->name;
+        $school->save();
+        return redirect('/school');
+    }
+
+    public function edit($id)
+    {
+        $data = School::where('id', $id)->first();
+        return view('school.edit',[
+            'data' => $data,
+            'title' => "School"
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required|unique:schools,name'
+        ]);
+
+        $school = School::findOrFail($id);
         $school->name = $request->name;
         $school->save();
         return redirect('/school');

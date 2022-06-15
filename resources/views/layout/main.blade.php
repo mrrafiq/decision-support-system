@@ -10,12 +10,11 @@
 </head>
 
 <body>
-    <div class="flex">
+    <div class="absolute container">
         @include('layout/sidebar')
-        <div class="absolute container mt-6 md:left-80 left-20 ">
+        <div class="absolute container mx-auto mt-6 md:left-80 left-20 ">
             @yield('main')
         </div>
-
     </div>
 </body>
 

@@ -57,14 +57,17 @@ class DatabaseSeeder extends Seeder
         $school->name = 'MA Ar-risalah';
         $school->save();
 
-        Category::create(['name' => 'Deskripsi']);
-        Category::create(['name' => 'Gambar']);
-        Category::create(['name' => 'Visi dan Misi']);
-        Category::create(['name' => 'Kurikulum']);
-        Category::create(['name' => 'Biaya']);
-        Category::create(['name' => 'Program Unggulan']);
-        Category::create(['name' => 'Fasilitas']);
-        Category::create(['name' => 'Ekstrakurikuler']);
+        Category::create(['name' => 'deskripsi']);
+        Category::create(['name' => 'gambar']);
+        Category::create(['name' => 'visi']);
+        Category::create(['name' => 'misi']);
+        Category::create(['name' => 'kurikulum']);
+        Category::create(['name' => 'biaya_pembangunan']);
+        Category::create(['name' => 'biaya_perbulan']);
+        Category::create(['name' => 'biaya_lain']);
+        Category::create(['name' => 'program_unggulan']);
+        Category::create(['name' => 'fasilitas']);
+        Category::create(['name' => 'ekstrakurikuler']);
 
     }
 }
