@@ -32,13 +32,11 @@
         <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[6])) }}</p>
         <p class="text-base">Rp.{{ $values == null ? '' :  number_format((float)($values[6]), 2, ",", ".") }}</p>
         <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[7])) }}</p>
-        <p class="text-base">Rp.{{ $values == null ? '' :  number_format((float)($values[7]), 2, ",", ".") }}</p>
-        <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[8])) }}</p>
         <p class="text-base">{{ $values == null ? '' : $values[8] }}</p>
+        <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[8])) }}</p>
+        <p class="text-base">{{ $values == null ? '' : $values[9] }}</p>
         <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[9])) }}</p>
         <p class="text-base">{{ $values == null ? '' : $values[9] }}</p>
-        <p class="text-xl font-semibold mt-8">{{ $categories == null ? '' : strtoupper(str_replace('_',' ',$categories[10])) }}</p>
-        <p class="text-base">{{ $values == null ? '' : $values[10] }}</p>
     </div>
     @endif
 @endsection

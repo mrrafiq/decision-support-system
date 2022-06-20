@@ -53,11 +53,6 @@
                 <input id="monthly" class=" pl-2 w-full outline-none border-none" type="text" name="biaya_perbulan"
                     placeholder="contoh: 5.000.000" required />
             </div>
-            <label for="others" class="font-semibold">Biaya Lainnya</label>
-            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl w-4/5 mt-4">
-                <input id="others" class=" pl-2 w-full outline-none border-none" type="text" name="biaya_lain" placeholder="contoh: 5.000.000"
-                    required />
-            </div>
             <label for="program" class="font-semibold">Program Unggulan</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl w-4/5 mt-4">
                 <input id="program" class=" pl-2 w-full outline-none border-none" type="text" name="program_unggulan" placeholder="Tahfiz, Peternakan,..."

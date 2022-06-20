@@ -15,8 +15,7 @@ class DecisionMakerController extends Controller
      */
     public function index()
     {
-        $decision_maker = new DecisionMaker;
-        $data = DecisionMaker::get();
+        $data = DecisionMaker::where('user_id', Auth::user()->id)->get();
         return view('/decision-maker/index',[
             'title' => 'Decision Maker'
         ], compact('data'));

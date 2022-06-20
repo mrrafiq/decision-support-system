@@ -93,15 +93,12 @@ class SchoolDetailController extends Controller
                 $school_detail->value = $request->biaya_perbulan;
             }
             else if($category[$i]->id == 8){
-                $school_detail->value = $request->biaya_lain;
-            }
-            else if($category[$i]->id == 9){
                 $school_detail->value = $request->program_unggulan;
             }
-            else if($category[$i]->id == 10){
+            else if($category[$i]->id == 9){
                 $school_detail->value = $request->fasilitas;
             }
-            else if($category[$i]->id == 11){
+            else if($category[$i]->id == 10){
                 $school_detail->value = $request->ekstrakurikuler;
             }
             $school_detail->save();
@@ -169,15 +166,12 @@ class SchoolDetailController extends Controller
                     $school_detail->value = $request->biaya_perbulan;
                 }
                 else if($category[$i]->id == 8){
-                    $school_detail->value = $request->biaya_lain;
-                }
-                else if($category[$i]->id == 9){
                     $school_detail->value = $request->program_unggulan;
                 }
-                else if($category[$i]->id == 10){
+                else if($category[$i]->id == 9){
                     $school_detail->value = $request->fasilitas;
                 }
-                else if($category[$i]->id == 11){
+                else if($category[$i]->id == 10){
                     $school_detail->value = $request->ekstrakurikuler;
                 }
                 $school_detail->save();

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakerController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolDetailController;
+use App\Http\Controllers\UserCategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,5 +53,18 @@ Route::group(['middleware' => ['auth']],function () {
         Route::post('/update/{id}', [SchoolController::class, 'update'])->name('update-school');
         Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->name('update-detail');
         Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->name('destroy-school');
+    });
+
+    Route::prefix('user-categories')->group(function () {
+        Route::get('/', [UserCategoriesController::class, 'index'])->name('user-categories');
+        Route::get('/create', [UserCategoriesController::class, 'create'])->name('create-categories');
+        Route::post('/store', [UserCategoriesController::class, 'store'])->name('store-categories');
+        Route::get('/edit', [UserCategoriesController::class, 'edit'])->name('edit-categories');
+        Route::post('/update', [UserCategoriesController::class, 'update'])->name('update-categories');
+        Route::delete('/destroy/{id}', [UserCategoriesController::class, 'destroy'])->name('destroy-categories');
+    });
+
+    Route::prefix('calculate')->group(function (){
+        // Route::get('/',)
     });
 });

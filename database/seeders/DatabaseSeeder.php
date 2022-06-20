@@ -64,7 +64,6 @@ class DatabaseSeeder extends Seeder
         Category::create(['name' => 'kurikulum']);
         Category::create(['name' => 'biaya_pembangunan']);
         Category::create(['name' => 'biaya_perbulan']);
-        Category::create(['name' => 'biaya_lain']);
         Category::create(['name' => 'program_unggulan']);
         Category::create(['name' => 'fasilitas']);
         Category::create(['name' => 'ekstrakurikuler']);
