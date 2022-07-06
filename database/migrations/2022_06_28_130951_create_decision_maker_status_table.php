@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('decision_maker_status', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->integer('type')->nullable();
+            $table->foreignId('decision_maker_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('decision_maker_statuses');
     }
 };

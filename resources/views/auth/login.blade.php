@@ -13,6 +13,7 @@
         }
 
     </style>
+    <title>Login</title>
 </head>
 
 <body>

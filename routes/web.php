@@ -7,6 +7,10 @@ use App\Http\Controllers\DecisionMakerController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolDetailController;
 use App\Http\Controllers\UserCategoriesController;
+use App\Http\Controllers\CalculateController;
+use App\Http\Controllers\AhpController;
+use App\Http\Controllers\ArasController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +69,13 @@ Route::group(['middleware' => ['auth']],function () {
     });
 
     Route::prefix('calculate')->group(function (){
-        // Route::get('/',)
+        Route::get('/', [CalculateController::class, 'index'])->name('calculate');
+        Route::get('/weighting', [AhpController::class, 'index'])->name('weighting');
+        Route::post('/process', [AhpController::class, 'calculate'])->name('process');
+        Route::get('/alternate/{id}', [ArasController::class, 'index'])->name('alternate');
+        Route::post('/store', [ArasController::class, 'store'])->name('store-aras');
+        Route::get('/direction', [ArasController::class, 'direction'])->name('direction');
+        Route::post('/set-decision-maker', [ArasController::class, 'setDecisionMaker'])->name('set-decision-maker');
+        Route::post('/skip-decision-maker', [ArasController::class, 'skipDecisionMaker'])->name('skip-decision-maker');
     });
 });

@@ -4,7 +4,7 @@
         <p class="text-4xl">Add Categories</p>
     </div>
     <div class="mt-12">
-        <div class="w-4/5 bg-neutral-100 px-10 py-10 rounded-lg">
+        <div class="w-full bg-neutral-100 px-10 py-10 rounded-lg">
             <form action="{{ route('update-categories') }}" method="POST">
                 {{ csrf_field() }}
                 <div class="flex items-center">

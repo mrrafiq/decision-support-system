@@ -4,7 +4,7 @@
         <p class="text-4xl">Categories</p>
     </div>
     <div class="mt-12">
-        <div class="flex items-center justify-between w-4/5">
+        <div class="flex items-center justify-between">
             <div></div>
             @if (count($data) == 0)
                 <button
@@ -19,7 +19,7 @@
             @endif
 
         </div>
-        <table class="w-4/5 text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
+        <table class="w-full text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
             <thead>
                 <tr>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">

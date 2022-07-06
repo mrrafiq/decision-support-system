@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('aras', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->integer('type')->nullable();
+            $table->foreignId('decision_maker_id')->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('school_id')->constrained();
+            $table->integer('value');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('aras');
     }
 };

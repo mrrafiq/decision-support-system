@@ -11,6 +11,7 @@
         }
 
     </style>
+    <title>Register</title>
 </head>
 
 <body>

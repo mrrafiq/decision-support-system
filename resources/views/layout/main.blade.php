@@ -12,7 +12,7 @@
 <body>
     <div class="container overflow-x-auto">
         @include('layout/sidebar')
-        <div class="absolute container mx-auto mt-6 md:left-80 left-20">
+        <div class="absolute container mx-auto mt-6 md:left-80 left-20 w-3/5">
             @yield('main')
         </div>
     </div>

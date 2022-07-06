@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Category;
+use App\Models\DecisionMaker;
+use App\Models\UserCategories;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -57,16 +59,24 @@ class DatabaseSeeder extends Seeder
         $school->name = 'MA Ar-risalah';
         $school->save();
 
-        Category::create(['name' => 'deskripsi']);
-        Category::create(['name' => 'gambar']);
-        Category::create(['name' => 'visi']);
-        Category::create(['name' => 'misi']);
-        Category::create(['name' => 'kurikulum']);
-        Category::create(['name' => 'biaya_pembangunan']);
-        Category::create(['name' => 'biaya_perbulan']);
-        Category::create(['name' => 'program_unggulan']);
-        Category::create(['name' => 'fasilitas']);
-        Category::create(['name' => 'ekstrakurikuler']);
+        DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
+        DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
+        DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
 
+        Category::create(['name' => 'deskripsi', 'type' => '1']);
+        Category::create(['name' => 'gambar']);
+        Category::create(['name' => 'visi', 'type' => '1']);
+        Category::create(['name' => 'misi']);
+        Category::create(['name' => 'kurikulum', 'type' => '1']);
+        Category::create(['name' => 'biaya_pembangunan', 'type' => '0']);
+        Category::create(['name' => 'biaya_perbulan', 'type' => '0']);
+        Category::create(['name' => 'program_unggulan', 'type' => '1']);
+        Category::create(['name' => 'fasilitas', 'type' => '1']);
+        Category::create(['name' => 'ekstrakurikuler', 'type' => '1']);
+
+        UserCategories::create(['user_id' => 1, 'category_id' => 1]);
+        UserCategories::create(['user_id' => 1, 'category_id' => 3]);
+        UserCategories::create(['user_id' => 1, 'category_id' => 5]);
+        UserCategories::create(['user_id' => 1, 'category_id' => 6]);
     }
 }

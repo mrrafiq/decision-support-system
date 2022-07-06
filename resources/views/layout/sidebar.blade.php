@@ -1,5 +1,5 @@
 <div
-    class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar justify-between">
+    class="fixed flex flex-col left-0 w-14 hover:w-64 md:w-64 bg-gray-900 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar justify-between">
     <div class="overflow-y-auto overflow-x-hidden flex flex-col flex-grow">
         <div class="flex flex-col mt-3 mb-6 text-center">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-circle"
@@ -23,7 +23,7 @@
             </li>
             <li>
                 <a href="{{ route('dashboard') }}"
-                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Dashboard' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-600 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Dashboard' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
                     <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -75,6 +75,17 @@
                         </svg>
                     </span>
                     <span class="ml-2 text-sm tracking-wide truncate">Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('calculate')}}"
+                    class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Calculate' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
+                    <span class="inline-flex justify-center items-center ml-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Calculate</span>
                 </a>
             </li>
             <li class="px-5 hidden md:block">
