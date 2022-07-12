@@ -1,5 +1,6 @@
 @extends('layout.main')
 @section('main')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div>
     <p class="text-4xl">Weighting</p>
     <p class="text-base text-gray-500 mt-4">Masukkan kriteria prioritas mulai dari yang tertinggi hingga terendah</p>
@@ -13,94 +14,37 @@
 <div>
     <form action="{{route('process')}}" method="POST">
         @csrf
-        @for ($j = 0; $j < count($decision_maker); $j++) 
-            @php
-                $k =0;
-            @endphp
-            <div class="mt-8">
-                <input id="decision_maker_id_{{$j}}" class=" pl-2 w-full outline-none border-none bg-transparent"
-                    type="hidden" name="decision_maker_id_{{$j}}" required value="{{$decision_maker[$j]->id}}" />
-                <p class="text-lg">{{$decision_maker[$j]->name}}</p>
-                {{$k}}
-            </div>
-            <div class="mt-4">
-                <ol class="list-decimal">
-                    @for ($i = 0; $i < count($user_categories); $i++) 
-                        @if ($j==count($decision_maker)-1) 
-                            @php
-                                $k=$k+1;
-                            @endphp 
-                            <li class="mb-4">
-                                <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                                    <select name="category_id_{{$k}}" id="category_id_{{$k}}"
-                                        class="pl-2 w-full outline-none border-none bg-transparent" required>
-                                        <option value="">Pilih Kategori</option>
-                                        @foreach ($user_categories as $key)
-                                        <option value="{{$key->category_id}}">
-                                            @if ($key->category_id == 1)
-                                            Jarak
-
-                                            @elseif ($key->category_id == 3)
-                                            Visi dan Misi
-                                            @else
-                                            {{ucwords(str_replace('_',' ',$key->category->name))}}
-                                            @endif
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                {{$k}}
-                            </li>
-                        @elseif($j < count($decision_maker)-1 && $j != 0)
-                            @php
-                                $k = count($user_categories)+$i;
-                            @endphp
-                            <li class="mb-4">
-                                <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                                    <select name="category_id_{{$k}}" id="category_id_{{$k}}"
-                                        class="pl-2 w-full outline-none border-none bg-transparent" required>
-                                        <option value="">Pilih Kategori</option>
-                                        @foreach ($user_categories as $key)
-                                        <option value="{{$key->category_id}}">
-                                            @if ($key->category_id == 1)
-                                            Jarak
-
-                                            @elseif ($key->category_id == 3)
-                                            Visi dan Misi
-                                            @else
-                                            {{ucwords(str_replace('_',' ',$key->category->name))}}
-                                            @endif
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </li>
-                        @elseif($j == 0)
-                            <li class="mb-4">
-                                <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                                    <select name="category_id_{{$i}}" id="category_id_{{$i}}"
-                                        class="pl-2 w-full outline-none border-none bg-transparent">
-                                        <option value="">Pilih Kategori</option>
-                                        @foreach ($user_categories as $key)
-                                        <option value="{{$key->category_id}}">
-                                            @if ($key->category_id == 1)
-                                            Jarak
-
-                                            @elseif ($key->category_id == 3)
-                                            Visi dan Misi
-                                            @else
-                                            {{ucwords(str_replace('_',' ',$key->category->name))}}
-                                            @endif
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </li>
-                        @endif
-                    @endfor
-                </ol>
-            </div>
-        @endfor
+        <div class="mt-8 mb-4">
+            <input id="decision_maker_id" class=" pl-2 w-full outline-none border-none bg-transparent"
+                type="hidden" name="decision_maker_id" required value="{{$decision_maker->id}}" />
+            <p class="text-lg">Decision Maker: <span class="font-bold">{{$decision_maker->name}}</span></p>
+        </div>
+        <hr>
+        <div class="mt-4">
+            <ol class="list-decimal">
+                @for ($i = 0; $i < count($user_categories); $i++)
+                    <li class="mb-4">
+                        <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+                            <select name="category_id_{{$i}}" id="category_id_{{$i}}"
+                                class="pl-2 w-full outline-none border-none bg-transparent" required>
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($user_categories as $key)
+                                    <option value="{{$key->category_id}}">
+                                        @if ($key->category_id == 1)
+                                        Jarak
+                                        @elseif ($key->category_id == 3)
+                                        Visi dan Misi
+                                        @else
+                                        {{ucwords(str_replace('_',' ',$key->category->name))}}
+                                        @endif
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </li>
+                @endfor
+            </ol>
+        </div>
         <div class="flex items-center justify-between mb-8">
             <div>
             </div>
@@ -111,4 +55,23 @@
         </div>
     </form>
 </div>
+<script>
+    $(function () {
+        $('select').change(function() {
+            var used = new Set;
+            $('select').each(function () {
+            var reset = false;
+            $('option', this).each(function () {
+                var hide = used.has($(this).text());
+                if (hide && $(this).is(':selected')) reset = true;
+                $(this).prop('hidden', hide);
+            });
+            if (reset) $('option:not([hidden]):first', this).prop('selected', true);
+            used.add($('option:selected', this).text());
+            });
+        }).trigger('change'); // run at load
+    });
+</script>
 @endsection
+
+

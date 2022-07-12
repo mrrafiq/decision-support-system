@@ -6,6 +6,7 @@ use App\Models\Calculate;
 use App\Models\DecisionMaker;
 use App\Models\UserCategories;
 use App\Models\Ahp;
+use App\Models\Aras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,12 +21,34 @@ class CalculateController extends Controller
     public function index()
     {
         $data = Calculate::where('user_id', Auth::user()->id)->get();
-        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->get();
         $ahp = Ahp::join('decision_makers', 'ahp.decision_maker_id', '=', 'decision_makers.id')
                 ->where('decision_makers.user_id', Auth::user()->id)->get();
+        $decision_maker_total = DecisionMaker::where('user_id', Auth::user()->id)->get();
+        $arr_data = [];
+        foreach($decision_maker_total as $key){
+            $arr_data[] = $key->id;
+        }
+
+        for ($i=0; $i < count($arr_data); $i++) {
+            $aras = Aras::where('decision_maker_id', $arr_data[$i])->get();
+            if (count($aras) == null) {
+                $decision_maker = DecisionMaker::where('id', $arr_data[$i])->first();
+                return view('calculate.index',[
+                    'title' => 'Calculate',
+                    'data' => $decision_maker,
+                    'aras' => $aras,
+                    'decision_maker' => $decision_maker_total,
+                    'ahp' => $ahp,
+                ], compact('data'));
+            }
+        }
+        $aras = Aras::join('decision_makers', 'aras.decision_maker_id', '=', 'decision_makers.id')
+                ->whereIn('decision_makers.id', $arr_data)->get();
+        // dd($aras);
         return view('calculate.index',[
             'title' => 'Calculate',
-            'decision_maker' => $decision_maker,
+            'aras' => $aras,
+            'decision_maker' => $decision_maker_total,
             'ahp' => $ahp,
         ], compact('data'));
     }

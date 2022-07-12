@@ -55,13 +55,14 @@ class DatabaseSeeder extends Seeder
             'delete_decision_maker'
         ]);
 
-        $school = new School;
-        $school->name = 'MA Ar-risalah';
-        $school->save();
+        School::create(['name' => 'MA AR-Risalah']);
+        School::create(['name' => 'MA Tarbiyah Islamiyah']);
+        School::create(['name' => 'MA PGAI SUmatera Barat']);
 
         DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
         DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
+        DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
 
         Category::create(['name' => 'deskripsi', 'type' => '1']);
         Category::create(['name' => 'gambar']);

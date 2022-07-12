@@ -4,7 +4,7 @@
         <p class="text-4xl capitalize">{{$school->name}}</p>
     </div>
     <div class="bg-gray-100 rounded-[20px] py-10 px-10 w-4/5">
-        <form action="{{route('store-aras')}}" method="POST">
+        <form action="{{url('calculate/store/'. $school->id)}}" method="POST">
             @csrf
             @for ($i = 0; $i < count($user_categories); $i++)
                 <div class="flex mb-4 justify-between w-4/5">
@@ -35,5 +35,5 @@
             </div>
         </form>
     </div>
-    
+
 @endsection
