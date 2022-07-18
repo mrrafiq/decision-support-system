@@ -63,7 +63,7 @@ class AhpController extends Controller
                         }else {
                             for ($col=0; $col < $total_categories; $col++) {
                                 if ($col == 0) {
-                                    $next_data = number_format(($weight[0][$col])/($row+1), 2);
+                                    $next_data = ($weight[0][$col])/($row+1);
 
                                 }else{
                                     $next_data = $weight[$row-1][$col-1];
@@ -82,7 +82,7 @@ class AhpController extends Controller
                     // count total for each weight vertical data
                     for ($y=0; $y < count($weight); $y++) {
                         for ($x=0; $x < count($weight); $x++) {
-                            $temp_total = number_format($temp_total + $weight[$x][$y], 2);
+                            $temp_total = $temp_total + $weight[$x][$y];
                         }
                         array_push($total, $temp_total);
                         $temp_total = 0;

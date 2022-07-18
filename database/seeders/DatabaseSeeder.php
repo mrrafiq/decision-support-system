@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
         DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
         DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
 
-        Category::create(['name' => 'deskripsi', 'type' => '1']);
+        Category::create(['name' => 'deskripsi', 'type' => '0']);
         Category::create(['name' => 'gambar']);
         Category::create(['name' => 'visi', 'type' => '1']);
         Category::create(['name' => 'misi']);
@@ -79,5 +79,7 @@ class DatabaseSeeder extends Seeder
         UserCategories::create(['user_id' => 1, 'category_id' => 3]);
         UserCategories::create(['user_id' => 1, 'category_id' => 5]);
         UserCategories::create(['user_id' => 1, 'category_id' => 6]);
+        UserCategories::create(['user_id' => 1, 'category_id' => 7]);
+        UserCategories::create(['user_id' => 1, 'category_id' => 8]);
     }
 }

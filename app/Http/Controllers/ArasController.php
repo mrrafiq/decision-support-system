@@ -20,8 +20,6 @@ class ArasController extends Controller
         $user_categories = UserCategories::with('category')->where('user_id', Auth::user()->id)->get();
         $school = School::where('id', $id)->first();
 
-        // dd($decision_maker);
-
         return view('calculate.alternate',[
             'title' => 'Calculate',
             'decision_maker' => $decision_maker,
@@ -188,7 +186,6 @@ class ArasController extends Controller
             }
             elseif($request->decision_maker_id == 0){
                 //return to next page
-                // dd($latest_decision_maker);
                 if(in_array($id+1, $arr_data)){
                     return redirect()->route('direction', ['id' => $id+1]);
                 }
@@ -202,24 +199,6 @@ class ArasController extends Controller
 
     }
 
-
-    /**This function is to display each school data and user could input the value and
-     * calculate it with ARAS method
-    */
-    public function show(Request $request, $id)
-    {
-        // $decision_maker
-
-        // return view('calculate.show'. [
-        //     'title' => 'Calculate',
-        //     'decision_maker' => $decision_maker
-        // ]);
-    }
-
-    public function verify(Request $request)
-    {
-
-    }
 
 
 }
