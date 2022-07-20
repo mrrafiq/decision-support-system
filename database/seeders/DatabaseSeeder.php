@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 
         School::create(['name' => 'MA AR-Risalah']);
         School::create(['name' => 'MA Tarbiyah Islamiyah']);
-        School::create(['name' => 'MA PGAI SUmatera Barat']);
+        School::create(['name' => 'MA PGAI Sumatera Barat']);
 
         DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);

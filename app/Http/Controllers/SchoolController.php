@@ -7,6 +7,7 @@ use App\Models\School;
 
 class SchoolController extends Controller
 {
+
     public function index()
     {
         $data = School::all();

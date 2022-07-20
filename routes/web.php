@@ -10,6 +10,7 @@ use App\Http\Controllers\UserCategoriesController;
 use App\Http\Controllers\CalculateController;
 use App\Http\Controllers\AhpController;
 use App\Http\Controllers\ArasController;
+use App\Http\Controllers\CategoryController;
 
 
 /*
@@ -45,20 +46,6 @@ Route::group(['middleware' => ['auth']],function () {
         Route::delete('/destroy/{id}', [DecisionMakerController::class, 'destroy'])->name('destroy-decision-maker');
     });
 
-    Route::prefix('school')->group(function () {
-        Route::get('/', [SchoolController::class, 'index'])->name('school');
-        ROute::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
-        Route::get('/create', [SchoolController::class, 'create'])->name('create-school');
-        Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->name('create-detail');
-        Route::post('/store', [SchoolController::class, 'store'])->name('store-school');
-        Route::post('/store-detail/{id}', [SchoolDetailController::class, 'store'])->name('store-detail');
-        Route::get('/edit/{id}', [SchoolController::class, 'edit'])->name('edit-school');
-        Route::get('/edit-detail/{id}', [SchoolDetailController::class, 'edit'])->name('edit-detail');
-        Route::post('/update/{id}', [SchoolController::class, 'update'])->name('update-school');
-        Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->name('update-detail');
-        Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->name('destroy-school');
-    });
-
     Route::prefix('user-categories')->group(function () {
         Route::get('/', [UserCategoriesController::class, 'index'])->name('user-categories');
         Route::get('/create', [UserCategoriesController::class, 'create'])->name('create-categories');
@@ -67,6 +54,28 @@ Route::group(['middleware' => ['auth']],function () {
         Route::post('/update', [UserCategoriesController::class, 'update'])->name('update-categories');
         Route::delete('/destroy/{id}', [UserCategoriesController::class, 'destroy'])->name('destroy-categories');
     });
+
+        Route::prefix('category')->group(function() {
+            Route::get('/', [CategoryController::class, 'index'])->name('category');
+            Route::get('/create', [CategoryController::class, 'create'])->name('create-category');
+            Route::get('/store', [CategoryController::class, 'store'])->name('store-category');
+            Route::get('/edit', [CategoryController::class, 'edit'])->name('store-category');
+            Route::get('/update', [CategoryController::class, 'update'])->name('update-category');
+        });
+
+        Route::prefix('school')->group(function () {
+            Route::get('/', [SchoolController::class, 'index'])->middleware('permission:read_school')->name('school');
+            ROute::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
+            Route::get('/create', [SchoolController::class, 'create'])->name('create-school');
+            Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->name('create-detail');
+            Route::post('/store', [SchoolController::class, 'store'])->name('store-school');
+            Route::post('/store-detail/{id}', [SchoolDetailController::class, 'store'])->name('store-detail');
+            Route::get('/edit/{id}', [SchoolController::class, 'edit'])->name('edit-school');
+            Route::get('/edit-detail/{id}', [SchoolDetailController::class, 'edit'])->name('edit-detail');
+            Route::post('/update/{id}', [SchoolController::class, 'update'])->name('update-school');
+            Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->name('update-detail');
+            Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->name('destroy-school');
+        });
 
     Route::prefix('calculate')->group(function (){
         Route::get('/', [CalculateController::class, 'index'])->name('calculate');

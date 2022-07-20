@@ -2,14 +2,17 @@
 @section('main')
     <div class="mb-8">
         <p class="text-4xl capitalize">{{$school->name}}</p>
+        <p class="mt-8 text-gray-400 text-sm">Notes:</p>
+        <p class="text-sm text-gray-400"><span class="text-sm text-green-400">Green</span> means benefit, greater are better and less is bad.</p>
+        <p class="text-sm text-gray-400"><span class="text-sm text-red-400">Red</span> means cost, less are better and greater are bad.</p>
     </div>
-    <div class="bg-gray-100 rounded-[20px] py-10 px-10 w-4/5">
+    <div class="mb-8 bg-gray-100 rounded-[20px] py-10 px-10 w-4/5">
         <form action="{{url('calculate/store/'. $school->id)}}" method="POST">
             @csrf
             @for ($i = 0; $i < count($user_categories); $i++)
                 <div class="flex mb-4 justify-between w-4/5">
                     <div>
-                        <p class="first-letter:uppercase text-lg">
+                        <p class="first-letter:uppercase text-lg {{$user_categories[$i]->category->type == 0 ? 'text-red-500' : 'text-green-500'}}">
                             @if ($user_categories[$i]->category->id == 1)
                                 Jarak
                             @elseif ($user_categories[$i]->category->id == 3)

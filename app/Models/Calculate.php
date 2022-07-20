@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Calculate extends Model
 {
     use HasFactory;
+
+    public function decision_maker()
+    {
+        return $this->belongsTo(DecisionMaker::class, 'foreign_key');
+    }
 }

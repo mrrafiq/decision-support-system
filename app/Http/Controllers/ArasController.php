@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\CalculateController;
 use App\Models\Aras;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ahp;
@@ -122,6 +123,8 @@ class ArasController extends Controller
 
         //redirecting to index because of total of the school that counted
         if ($id == count($school)) {
+            $calculate = new CalculateController;
+            $calculate->result($decision_maker_id);
             return redirect()->route('direction',['id' => $decision_maker_id+1]);
         }
         return redirect()->route('alternate', ['id' => $id+1]);
@@ -145,8 +148,8 @@ class ArasController extends Controller
 
         $aras = Aras::where('decision_maker_id', $id)->get();
 
-        if($decision_maker == null){
-            $decision_maker = DecisionMaker::where('id', $id+1)->first();
+        if(count($aras) == null){
+            $decision_maker = DecisionMaker::where('id', $id)->first();
             if ($decision_maker == null) {
                 return redirect('/calculate');
             }
@@ -154,7 +157,8 @@ class ArasController extends Controller
 
         // to check is there any data in aras table
         if(count($aras) != null){
-            return redirect('/calculate');
+            $calculate = new CalculateController;
+            $calculate->result($id);
         }
         return view('calculate.direction',[
             'title' => 'Calculate',
