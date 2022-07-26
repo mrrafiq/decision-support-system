@@ -4,7 +4,7 @@
         <p class="text-4xl">Edit Category</p>
     </div>
     <div class="mt-12">
-        <form action="{{ route('store-category') }}" method="POST">
+        <form action="{{ url('category/update/'.$data->id) }}" method="POST">
             {{ csrf_field() }}
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
                 <input id="name" class=" pl-2 w-full outline-none border-none" value="{{$data->name}}" type="text" name="name" placeholder="Category Name"

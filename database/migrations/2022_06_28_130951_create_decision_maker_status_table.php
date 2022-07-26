@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('decision_maker_statuses');
+        Schema::dropIfExists('decision_maker_status');
     }
 };

@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div>
     <p class="text-4xl">Weighting</p>
-    <p class="text-base text-gray-500 mt-4">Masukkan kriteria prioritas mulai dari yang tertinggi hingga terendah</p>
+    <p class="text-base text-gray-500 mt-4">Masukkan perbandingan kriteria</p>
 </div>
 @if (Session::has('error'))
     <div class="basis-1/2 border-2 mt-6 rounded-2xl border-red-200 text-red-900 py-2 px-3 bg-red-100"
@@ -12,40 +12,59 @@
     </div>
 @endif
 <div>
-    <form action="{{route('process')}}" method="POST">
+    <form action="{{url('calculate/process/'. $decision_maker->id)}}" method="POST">
         @csrf
         <div class="mt-8 mb-4">
-            <input id="decision_maker_id" class=" pl-2 w-full outline-none border-none bg-transparent"
-                type="hidden" name="decision_maker_id" required value="{{$decision_maker->id}}" />
             <p class="text-lg">Decision Maker: <span class="font-bold">{{$decision_maker->name}}</span></p>
         </div>
         <hr>
-        <div class="mt-4">
-            <ol class="list-decimal">
-                @for ($i = 0; $i < count($user_categories); $i++)
-                    <li class="mb-4">
-                        <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                            <select name="category_id_{{$i}}" id="category_id_{{$i}}"
-                                class="pl-2 w-full outline-none border-none bg-transparent" required>
-                                <option value="">Pilih Kategori</option>
-                                @foreach ($user_categories as $key)
-                                    <option value="{{$key->category_id}}">
-                                        @if ($key->category_id == 1)
-                                        Jarak
-                                        @elseif ($key->category_id == 3)
-                                        Visi dan Misi
-                                        @else
-                                        {{ucwords(str_replace('_',' ',$key->category->name))}}
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </li>
-                @endfor
-            </ol>
+        <div class="mt-4 mb-4 flex grid grid-cols-3 gap-x-12 font-bold">
+            <p>Kriteria Pertama</p>
+            <p>Perbandingan</p>
+            <p>Kriteria Kedua</p>
         </div>
-        <div class="flex items-center justify-between mb-8">
+        @for ($i = 0; $i < count($user_categories)-1; $i++)
+            <div class="flex grid grid-cols-3 gap-x-12 mt-2">
+                <div>
+                    @for ($j = $i+1; $j < count($user_categories); $j++)
+                    <p>
+                        @if ($user_categories[$i]->category_id == 1)
+                            Jarak
+                        @elseif ($user_categories[$i]->category_id == 3)
+                            Visi dan Misi
+                        @else
+                            {{ucwords(str_replace('_',' ',$user_categories[$i]->category->name))}}
+                        @endif
+                    </p><br>
+                    @endfor
+                </div>
+                <div>
+                    @for ($j = $i+1; $j < count($user_categories); $j++)
+                        <select class="flex item-center border px-2" name="{{$user_categories[$i]->category->name}}_{{$j}}" id="{{$user_categories[$i]->category->name}}_{{$j}}" required>
+                            <option value="">-</option>
+                            @foreach ($scale as $item)
+                                <option value="{{$item->point}}">{{$item->point}} - {{$item->status}}</option>
+                            @endforeach
+                        </select><br>
+                    @endfor
+                </div>
+                <div>
+                    @for ($j = $i+1; $j < count($user_categories); $j++)
+                    <p>
+                        @if ($user_categories[$j]->category_id == 3)
+                            Visi dan Misi
+                        @else
+                            {{ucwords(str_replace('_', ' ',$user_categories[$j]->category->name))}}
+                        @endif
+                    </p>
+                    <br>
+                    @endfor
+                </div>
+            </div>
+            <hr>
+        @endfor
+
+        <div class="mt-4 flex items-center justify-between mb-8">
             <div>
             </div>
             <button type="submit"
@@ -55,23 +74,6 @@
         </div>
     </form>
 </div>
-<script>
-    $(function () {
-        $('select').change(function() {
-            var used = new Set;
-            $('select').each(function () {
-            var reset = false;
-            $('option', this).each(function () {
-                var hide = used.has($(this).text());
-                if (hide && $(this).is(':selected')) reset = true;
-                $(this).prop('hidden', hide);
-            });
-            if (reset) $('option:not([hidden]):first', this).prop('selected', true);
-            used.add($('option:selected', this).text());
-            });
-        }).trigger('change'); // run at load
-    });
-</script>
 @endsection
 
 

@@ -17,13 +17,11 @@ class ArasController extends Controller
 {
     public function index($id)
     {
-        $decision_maker = DecisionMakerStatus::with('decision_maker')->latest()->first();
         $user_categories = UserCategories::with('category')->where('user_id', Auth::user()->id)->get();
         $school = School::where('id', $id)->first();
 
         return view('calculate.alternate',[
             'title' => 'Calculate',
-            'decision_maker' => $decision_maker,
             'user_categories' => $user_categories,
             'school' => $school
         ]);
@@ -31,120 +29,78 @@ class ArasController extends Controller
 
     public function store(Request $request, $id)
     {
-        // dd($request->all());
-        $decision_maker_id = $request->decision_maker_id;
-        $school_id = $request->school_id;
-        $school = School::get();
-        $user_categories = UserCategories::where('user_id', Auth::user()->id)->get();
-
         // getting all request depends on total of user categories
-        for ($i = 0; $i < count($user_categories); $i++) {
-            if ($i == 0) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_0;
-                $aras->value = $request->value_0;
-                $aras->save();
-            }
-            elseif ($i == 1) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_1;
-                $aras->value = $request->value_1;
-                $aras->save();
-            }
-            elseif ($i == 2) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_2;
-                $aras->value = $request->value_2;
-                $aras->save();
-            }
-            elseif ($i == 3) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_3;
-                $aras->value = $request->value_3;
-                $aras->save();
-            }
-            elseif ($i == 4) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_4;
-                $aras->value = $request->value_4;
-                $aras->save();
-            }
-            elseif ($i == 5) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_5;
-                $aras->value = $request->value_5;
-                $aras->save();
-            }
-            elseif ($i ==6) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_6;
-                $aras->value = $request->value_6;
-                $aras->save();
-            }
-            elseif ($i == 7) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_7;
-                $aras->value = $request->value_7;
-                $aras->save();
-            }
-            elseif ($i == 8) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_8;
-                $aras->value = $request->value_8;
-                $aras->save();
-            }
-            elseif ($i == 9) {
-                $aras = new Aras;
-                $aras->decision_maker_id = $decision_maker_id;
-                $aras->school_id = $school_id;
-                $aras->category_id = $request->category_id_9;
-                $aras->value = $request->value_9;
-                $aras->save();
-            }
+        $data = $request->all();
+        $items = [];
+        foreach ($data as $key => $value) {
+            $items[] = $value;
         }
 
+        $decision_maker = DecisionMakerStatus::with('decision_maker')->latest()->first();
+        $school = School::get();
+        $user_categories = UserCategories::where('user_id', Auth::user()->id)->get();
+        // dd($user_categories);
+        for ($i=0; $i < count($user_categories); $i++) {
+            $aras = new Aras;
+            $aras->decision_maker_id = $decision_maker->decision_maker_id;
+            $aras->category_id = $user_categories[$i]->category_id;
+            $aras->school_id = $id;
+            if ($user_categories[$i]->category_id == 1) {
+                if ($items[$i+1] <= 2) {
+                    $aras->value = 1;
+                }
+                elseif ($items[$i+1] <= 5) {
+                    $aras->value = 2;
+                }
+                elseif ($items[$i+1] <= 10) {
+                    $aras->value = 3;
+                }
+                elseif ($items[$i+1] <= 15) {
+                    $aras->value = 4;
+                }
+                elseif ($items[$i+1] <= 20) {
+                    $aras->value = 5;
+                }
+                elseif ($items[$i+1] <= 25) {
+                    $aras->value = 6;
+                }
+                elseif ($items[$i+1] <= 30) {
+                    $aras->value = 7;
+                }
+                elseif ($items[$i+1] <= 35) {
+                    $aras->value = 8;
+                }
+                elseif ($items[$i+1] <= 40) {
+                    $aras->value = 9;
+                }
+                else {
+                    $aras->value = 10;
+                }
+            }else{
+                $aras->value = $items[$i+1];
+            }
+            $aras->save();
+        }
+
+        $dm = DecisionMaker::where('user_id', Auth::user()->id)->get();
+        $dm_data = [];
+        foreach ($dm as $key => $value) {
+            $dm_data [] = $value->id;
+        }
+        
         //redirecting to index because of total of the school that counted
         if ($id == count($school)) {
             $calculate = new CalculateController;
-            $calculate->result($decision_maker_id);
-            return redirect()->route('direction',['id' => $decision_maker_id+1]);
+            $calculate->result($decision_maker->decision_maker_id);
+            return redirect()->route('direction',['id' => ($decision_maker->decision_maker_id)+1]);
         }
+
         return redirect()->route('alternate', ['id' => $id+1]);
     }
 
     public function direction($id)
     {
         $decision_maker = DecisionMaker::where('id', $id)->first();
-        // $arr_data= [];
-        // foreach ($decision_maker as $key) {
-        //     $arr_data[] = $key->id;
-        // }
-
-        // $decision_maker_aras = Aras::whereNotIn('decision_maker_id', $arr_data)->get();
-        // dd($decision_maker_aras);
-
-        // if (count($decision_maker_aras) == null) {
-        //     $decision_maker = DecisionMaker::where('id', $id)->first();
-
-        // }
 
         $aras = Aras::where('decision_maker_id', $id)->get();
 

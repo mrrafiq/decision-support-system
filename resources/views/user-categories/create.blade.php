@@ -7,54 +7,24 @@
         <div class="w-full bg-neutral-100 px-10 py-10 rounded-lg">
             <form action="{{ route('store-categories') }}" method="POST">
                 {{ csrf_field() }}
-                <div class="flex items-center">
-                    <input type="checkbox"
-                        class="cursor-pointer hover:bg-blue-500 w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="visi_misi" name="visi_misi" value="3">
-                    <label for="visi_misi" class="ml-2 font-medium">Visi dan Misi</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="kurikulum" name="kurikulum" value="5">
-                    <label for="kurikulum" class="ml-2 font-medium">Kurikulum</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="jarak" name="jarak" value="1">
-                    <label for="jarak" class="ml-2 font-medium">Jarak</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="biaya_pembangunan" name="biaya_pembangunan" value="6">
-                    <label for="biaya_pembangunan" class="ml-2 font-medium">Biaya Pembangunan</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="biaya_perbulan" name="biaya_perbulan" value="7">
-                    <label for="biaya_perbulan" class="ml-2 font-medium">Biaya Perbulan</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="program_unggulan" name="program_unggulan" value="8">
-                    <label for="program_unggulan" class="ml-2 font-medium">Program Unggulan</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="fasilitas" name="fasilitas" value="9">
-                    <label for="fasilitas" class="ml-2 font-medium">Fasilitas</label>
-                </div>
-                <div class="flex items-center mt-4">
-                    <input type="checkbox"
-                        class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                        id="ekstrakurikuler" name="ekstrakurikuler" value="10">
-                    <label for="ekstrakurikuler" class="ml-2 font-medium">Ekstrakurikuler</label>
-                </div>
+                @for ($i = 0; $i < count($categories); $i++)
+                @if ($categories[$i]->type !== null)
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox"
+                            class="cursor-pointer w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                            id="{{$categories[$i]->name}}" name="{{$categories[$i]->name}}" value="{{$categories[$i]->id}}">
+                        <label for="visi_misi" class="ml-2 font-medium">
+                            @if ($categories[$i]->id == 1)
+                                Jarak
+                            @elseif ($categories[$i]->id == 3)
+                                Visi dan Misi
+                            @else
+                                {{ucwords(str_replace("_", " ",$categories[$i]->name))}}
+                            @endif
+                        </label>
+                    </div>
+                @endif
+                @endfor
                 <div class="flex items-center justify-between max-w-full">
                     <div></div>
                     <button type="submit"

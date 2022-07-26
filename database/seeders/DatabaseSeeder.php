@@ -8,6 +8,7 @@ use App\Models\School;
 use App\Models\Category;
 use App\Models\DecisionMaker;
 use App\Models\UserCategories;
+use App\Models\Scale;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -36,6 +37,12 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'read_school']);
         Permission::create(['name' => 'delete_school']);
 
+        //Permission for Category
+        Permission::create(['name' => 'create_category']);
+        Permission::create(['name' => 'update_category']);
+        Permission::create(['name' => 'read_category']);
+        Permission::create(['name' => 'delete_category']);
+
         $administrator = Role::create(['name' => 'administrator']);
         $user_only = Role::create(['name' => 'user_only']);
 
@@ -61,8 +68,8 @@ class DatabaseSeeder extends Seeder
 
         DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
-        DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
-        DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
+        // DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
+        // DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
 
         Category::create(['name' => 'deskripsi', 'type' => '0']);
         Category::create(['name' => 'gambar']);
@@ -79,7 +86,15 @@ class DatabaseSeeder extends Seeder
         UserCategories::create(['user_id' => 1, 'category_id' => 3]);
         UserCategories::create(['user_id' => 1, 'category_id' => 5]);
         UserCategories::create(['user_id' => 1, 'category_id' => 6]);
-        UserCategories::create(['user_id' => 1, 'category_id' => 7]);
-        UserCategories::create(['user_id' => 1, 'category_id' => 8]);
+
+        Scale::create(['point' => 1, 'status' => "Sangat Tidak Penting"]);
+        Scale::create(['point' => 2, 'status' => "Tidak Terlalu Penting"]);
+        Scale::create(['point' => 3, 'status' => "Sama Penting"]);
+        Scale::create(['point' => 4, 'status' => "Agak Penting"]);
+        Scale::create(['point' => 5, 'status' => "Penting"]);
+        Scale::create(['point' => 6, 'status' => "Sedikit Lebih Penting"]);
+        Scale::create(['point' => 7, 'status' => "Sangat Penting"]);
+        Scale::create(['point' => 8, 'status' => "Sangat Lebih Penting"]);
+        Scale::create(['point' => 9, 'status' => "Paling Penting"]);
     }
 }

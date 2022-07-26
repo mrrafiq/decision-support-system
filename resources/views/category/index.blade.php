@@ -36,7 +36,11 @@
                         {{ $no }}
                     </td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        @if ($data->id == 1)
+                            jarak
+                        @else
                         {{ $data->name }}
+                        @endif
                     </td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">{{ $data->type }}</td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">

@@ -7,6 +7,7 @@ use App\Models\DecisionMaker;
 use App\Models\UserCategories;
 use App\Models\Ahp;
 use App\Models\Aras;
+use App\Models\Borda;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,18 +32,15 @@ class CalculateController extends Controller
         foreach($decision_maker_total as $key){
             $arr_data[] = $key->id;
         }
-        // $result = $this->result(2);
 
         $data = Calculate::join('decision_makers', 'calculates.decision_maker_id', '=', 'decision_makers.id')
                 ->whereIn('decision_makers.id', $arr_data)->get();
-        // dd($data);
 
         $count = [];
         foreach ($data as $key) {
             $count [] = $key->decision_maker_id;
         }
-        // dd($count);
-        
+
         $arr = [];
         if (count($data) != 0) {
             $aras = Aras::whereIn('decision_maker_id', $arr_data)->get();
@@ -51,17 +49,11 @@ class CalculateController extends Controller
             foreach ($aras as $key) {
                 $check[] = $key->decision_maker_id;
             }
-            // dd(array_unique($check));
-            // for ($i=0; $i < count(array_unique($check)); $i++) { 
-            //     if (in_array($check[$i], $count) == false) {
-            //         $this->result($check[$i]);
-            //     }
-            // }
             for ($i = 0; $i < count($data); $i++) {
                 $sch = School::where('id', $data[$i]->school_id)->first();
                 $arr[] = array("decision_maker_name" => $data[$i]->name,
-                                "school_name" => $sch->name, 
-                                "rank" => $data[$i]->rank, 
+                                "school_name" => $sch->name,
+                                "rank" => $data[$i]->rank,
                                 "score" => $data[$i]->score);
             }
             // dd($arr);
@@ -84,11 +76,12 @@ class CalculateController extends Controller
                             'school' => $schools,
                             'count' => $count
                         ]);
-                        
+
                     }
                 }
             }
             else{
+                $this->borda(Auth::user()->id);
                 return view('calculate.index',[
                     'title' => 'Calculate',
                     'aras' => $aras,
@@ -100,10 +93,10 @@ class CalculateController extends Controller
                     'count' => $count
                 ]);
             }
-            
+
         }
-        
-        
+
+
         for ($i=0; $i < count($arr_data); $i++) {
             $aras = Aras::where('decision_maker_id', $arr_data[$i])->get();
             if (count($aras) == null) {
@@ -118,10 +111,9 @@ class CalculateController extends Controller
                     'school' => $schools,
                     'total_data' => $total_data
                 ]);
-                
+
             }
         }
-    
         return view('calculate.index',[
             'title' => 'Calculate',
             'aras' => $aras,
@@ -296,7 +288,7 @@ class CalculateController extends Controller
                     array_push($ranked_school, array("id" => $school_utility[$j]["id"], "value" => $school_utility[$j]["value"]));
                 }
             }
-        }   
+        }
 
         for ($i=0; $i < count($ranked_school); $i++) {
             $calculate = new Calculate;
@@ -306,72 +298,83 @@ class CalculateController extends Controller
             $calculate->score = $ranked_school[$i]["value"];
             $calculate->save();
         }
+
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function borda($id){
+        $dm = DecisionMaker::where('user_id', $id)->get();
+        $decision_maker = [];
+        foreach ($dm as $key => $value) {
+            $decision_maker [] = $value->id;
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $school = School::get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Calculate  $calculate
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Calculate $calculate)
-    {
-        //
-    }
+        // the $times is for help calculate score * times
+        $times =[];
+        for ($i=count($school); $i > 0; $i--) {
+            $times [] = $i;
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Calculate  $calculate
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Calculate $calculate)
-    {
-        //
-    }
+        $rank = [];
+        for ($i=0; $i < count($decision_maker); $i++) {
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Calculate  $calculate
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Calculate $calculate)
-    {
-        //
-    }
+            $temp = [];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Calculate  $calculate
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Calculate $calculate)
-    {
-        //
+            for ($j=0; $j < count($school); $j++) {
+                $data = Calculate::where('decision_maker_id', $decision_maker[$i])->where('school_id', $school[$j]->id)->first();
+                // dd($data);
+                $score = 0;
+                for ($k=0; $k < count($school); $k++) {
+                    if ($data->rank == $k+1) {
+                        $score = $data->score * $times[$k];
+                    }
+                }
+                array_push($temp, ['rank'=> $data->rank, 'school_id' => $data->school_id,'score' => $score]);
+            }
+            array_push($rank, $temp);
+            unset($temp);
+        }
+        //calculate the total of each school_id in $rank array. The greatest score is the first choice, same as next
+        $total =[];
+        for ($i=0; $i < count($school); $i++) {
+            $temp_total = 0;
+            for ($j=0; $j < count($decision_maker); $j++) {
+                $temp_total += $rank[$j][$i]['score'];
+            }
+
+            array_push($total, ['school_id' => $school[$i]->id, 'total' => $temp_total]);
+        }
+        // dd($total);
+
+        $final = [];
+        $temp =[];
+        for ($i=0; $i < count($total); $i++) {
+            $temp [] = $total[$i]['total'];
+        }
+        for ($i=0; $i < count($total); $i++) {
+            $score = max($temp);
+            $school_id = 0;
+            for ($j=0; $j < count($total); $j++) {
+                $find = array_search($score, $total[$j]);
+                if ($find == true) {
+                    $school_id = $total[$j]['school_id'];
+                }
+            }
+            $final [] = ['rank' => $i+1, 'school_id' => $school_id,'score' => $score];
+            if (($key = array_search($score, $temp)) !== false) {
+                unset($temp[$key]);
+            }
+        }
+
+        for ($i=0; $i < count($final); $i++) {
+            $borda = new Borda;
+            $borda->user_id = $id;
+            $borda->school_id = $final[$i]['school_id'];
+            $borda->score = $final[$i]['score'];
+            $borda->rank = $final[$i]['rank'];
+            $borda->save();
+        }
     }
 }

@@ -6,10 +6,12 @@
     <div class="mt-12">
         <div class="flex items-center justify-between">
             <div></div>
+            @role('administrator')
             <button
                 class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
                 <a href="{{ route('create-school') }}">Add+</a>
             </button>
+            @endrole
         </div>
         <table class="w-full text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
             <thead>
@@ -49,6 +51,7 @@
                                         d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                                 </svg>
                             </a>
+                            @role('administrator')
                             <a href="{{ url('school/edit/' . $data->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500 hover:scale-125 mr-4"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -69,6 +72,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            @endrole
                         </div>
 
                     </td>

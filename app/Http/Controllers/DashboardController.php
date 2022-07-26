@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\CalculateController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Borda;
+use App\Models\DecisionMaker;
 
 class DashboardController extends Controller
 {
@@ -13,8 +17,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $borda = Borda::with('school')->where('user_id', Auth::user()->id)->get();
+
         return view('dashboard/index', [
-            'title' => 'Dashboard'
+            'title' => 'Dashboard',
+            'data' => $borda
         ]);
     }
 

@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ahp', function (Blueprint $table) {
+        Schema::create('borda', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('decision_maker_id')->constrained();
-            $table->foreignId('category_id')->constrained();
-            $table->float('weight',8, 6);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_id')->constrained();
+            $table->float('score', 8, 6);
+            $table->integer('rank');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ahp');
+        Schema::dropIfExists('borda');
     }
 };

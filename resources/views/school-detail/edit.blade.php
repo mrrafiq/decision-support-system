@@ -53,17 +53,17 @@
             <label for="program" class="font-semibold">Program Unggulan</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="program" class=" pl-2 w-full outline-none border-none" type="text" name="program_unggulan"
-                    placeholder="Tahfiz, Peternakan,..." required value="{{$values[8]}}"/>
+                    placeholder="Tahfiz, Peternakan,..." required value="{{$values[7]}}"/>
             </div>
             <label for="facility" class="font-semibold">Fasilitas</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="facility" class=" pl-2 w-full outline-none border-none" type="text" name="fasilitas"
-                    placeholder="Laundry, Makan harian,...." required value="{{$values[9]}}"/>
+                    placeholder="Laundry, Makan harian,...." required value="{{$values[8]}}"/>
             </div>
             <label for="extracurricular" class="font-semibold">Ekstrakurikuler</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <textarea id="extracurricular" class=" pl-2 w-full outline-none border-none" name="ekstrakurikuler"
-                    placeholder="ekstrakurikuler" required rows="5">{{$values[10]}}</textarea>
+                    placeholder="ekstrakurikuler" required rows="5">{{$values[9]}}</textarea>
             </div>
             <div class="flex items-center justify-between">
                 <div></div>

@@ -24,7 +24,7 @@ class SchoolDetailController extends Controller
                 'data' => $school,
                 'categories' => $categories,
                 'values' => $values,
-                'title' => 'Empty data'
+                'title' => 'School'
             ]);
         }else{
             $name = $data[0]->school->name;

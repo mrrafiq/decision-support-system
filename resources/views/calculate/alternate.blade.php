@@ -14,19 +14,21 @@
                     <div>
                         <p class="first-letter:uppercase text-lg {{$user_categories[$i]->category->type == 0 ? 'text-red-500' : 'text-green-500'}}">
                             @if ($user_categories[$i]->category->id == 1)
-                                Jarak
+                                Berapa jarak rumah anda ke sekolah ini? (Km)
                             @elseif ($user_categories[$i]->category->id == 3)
-                                Visi dan Misi
+                                Berapa penilaian anda terhadap Visi dan Misi sekolah ini?
                             @else
-                                {{ucwords(str_replace('_',' ',$user_categories[$i]->category->name))}}
+                                Berapa penilaian anda terhadap {{ucwords(str_replace('_',' ',$user_categories[$i]->category->name))}} sekolah ini?
                             @endif
                         </p>
                     </div>
-                    <input type="text" class="hidden" name="decision_maker_id" id="decision_maker_id" value="{{$decision_maker->decision_maker_id}}">
-                    <input type="text" class="hidden" name="school_id" id="school_id" value="{{$school->id}}">
-                    <input type="text" class="hidden" name="category_id_{{$i}}" id="category_id_{{$i}}" value="{{$user_categories[$i]->category->id}}">
+
                     <div class=" ml-4 flex items-center border-2 py-2 px-3 rounded-2xl">
-                        <input class="border-none bg-transparent" required type="number" name="value_{{$i}}" id="value_{{$i}}" min="1" max="10">
+                        @if ($user_categories[$i]->category->id == 1)
+                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="200">
+                        @else
+                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="10">
+                        @endif
                     </div>
                 </div>
             @endfor
