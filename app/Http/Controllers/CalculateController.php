@@ -32,7 +32,7 @@ class CalculateController extends Controller
         foreach($decision_maker_total as $key){
             $arr_data[] = $key->id;
         }
-
+        $aras = Aras::whereIn('decision_maker_id', $arr_data)->get();
         $data = Calculate::join('decision_makers', 'calculates.decision_maker_id', '=', 'decision_makers.id')
                 ->whereIn('decision_makers.id', $arr_data)->get();
 
@@ -81,6 +81,7 @@ class CalculateController extends Controller
                 }
             }
             else{
+                //if index.calculate is reloading, the data still inputing into borda table
                 $this->borda(Auth::user()->id);
                 return view('calculate.index',[
                     'title' => 'Calculate',
@@ -114,6 +115,7 @@ class CalculateController extends Controller
 
             }
         }
+        
         return view('calculate.index',[
             'title' => 'Calculate',
             'aras' => $aras,

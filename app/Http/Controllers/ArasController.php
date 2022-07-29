@@ -10,6 +10,7 @@ use App\Models\Ahp;
 use App\Models\DecisionMakerStatus;
 use App\Models\School;
 use App\Models\UserCategories;
+use App\Models\Calculate;
 use App\Models\DecisionMaker;
 
 
@@ -113,6 +114,10 @@ class ArasController extends Controller
 
         // to check is there any data in aras table
         if(count($aras) != null){
+            $data = Calculate::where('decision_maker_id', $id)->get();
+            if(count($data) != 0){
+                return redirect('/calculate');
+            }
             $calculate = new CalculateController;
             $calculate->result($id);
         }

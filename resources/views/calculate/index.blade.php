@@ -24,7 +24,7 @@
             </button>
         </div>
     @endif
-    @if(count($ahp) != null && count($aras) < $total_data)
+    @if(count($ahp) != null && count($aras) == null)
         <div class="mt-8 bg-yellow-100 px-4 py-4 basis-1/2 border-2 border-yellow-200 rounded-lg">
             <p class="text-lg">Let's start to input the value of each school category!</p>
             <button
