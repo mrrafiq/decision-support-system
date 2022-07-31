@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_categories', function (Blueprint $table) {
+        Schema::create('decision_sessions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('session_id')->constrained('decision_sessions')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained();
+            $table->string('name', 255);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_categories');
+        Schema::dropIfExists('decision_sessions');
     }
 };

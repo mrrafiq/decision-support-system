@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $category = Category::get();
         return view('category.index', [
-            "title" => "Category",
+            "title" => "Admin-Category",
             'data' => $category,
         ]);
     }
@@ -29,7 +29,7 @@ class CategoryController extends Controller
     public function create()
     {
         return view('category.create', [
-            'title' => "Category"
+            'title' => "Admin-Category"
         ]);
     }
 
@@ -70,7 +70,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('id', $id)->first();
         return view('category.edit', [
-            "title" => "Category",
+            "title" => "Admin-Category",
             "data" => $category,
         ]);
     }

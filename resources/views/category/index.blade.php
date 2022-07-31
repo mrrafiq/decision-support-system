@@ -1,7 +1,7 @@
 @extends('layout/main')
 @section('main')
     <div>
-        <p class="text-4xl">Category</p>
+        <p class="text-4xl">Category Management</p>
     </div>
     <div class="mt-12">
         <div class="flex items-center justify-between">

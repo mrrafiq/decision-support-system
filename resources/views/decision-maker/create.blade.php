@@ -7,7 +7,15 @@
         <form action="{{ route('store-decision-maker') }}" method="POST">
             {{ csrf_field() }}
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                <input id="name" class=" pl-2 w-full outline-none border-none" type="text" name="name" placeholder="Name"
+                <input id="username" class=" pl-2 w-full outline-none border-none" type="text" name="username" placeholder="Username"
+                    required />
+            </div>
+            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+                <input id="email" class=" pl-2 w-full outline-none border-none" type="email" name="email" placeholder="Email"
+                    required />
+            </div>
+            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+                <input id="password" class=" pl-2 w-full outline-none border-none" type="password" name="password" placeholder="Password"
                     required />
             </div>
             <div class="flex items-center justify-between">

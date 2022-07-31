@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DecisionMaker;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class DecisionMakerController extends Controller
@@ -15,10 +17,12 @@ class DecisionMakerController extends Controller
      */
     public function index()
     {
-        $data = DecisionMaker::where('user_id', Auth::user()->id)->get();
+        // $data = DecisionMaker::with('user')->get();
+        $data = DecisionMaker::with(['user', 'session'])->get();
         return view('/decision-maker/index',[
-            'title' => 'Decision Maker'
-        ], compact('data'));
+            'title' => 'Decision Maker',
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -42,13 +46,23 @@ class DecisionMakerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:decision_makers,name'
+            'username' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'password' => 'required|min:8'
         ]);
 
-        $decision_maker = new DecisionMaker;
-        $decision_maker->name = $request->name;
-        $decision_maker->user_id = Auth::user()->id;
-        $decision_maker->save();
+        $user = new User;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->assignRole(2);
+        $user->save();
+
+        $new = User::latest()->first();
+        $dm = new DecisionMaker;
+        $dm->user_id = $new->id;
+        $dm->session_id = null;
+        $dm->save();
         return redirect('/decision-maker');
     }
 
@@ -71,9 +85,11 @@ class DecisionMakerController extends Controller
      */
     public function edit($id)
     {
-        $data = DecisionMaker::where('id', $id)->first();
+        $data = DecisionMaker::where('user_id', $id)->first();
+        $user = User::where('id', $id)->first();
         return view('decision-maker.edit', [
             'data' => $data,
+            'user' => $user,
             'title' => 'Decision Maker'
         ]);
     }
@@ -87,14 +103,13 @@ class DecisionMakerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:decision_makers,name'
-        ]);
-
-        $decision_maker = DecisionMaker::findOrFail($id);
-        $decision_maker->name = $request->name;
-        $decision_maker->user_id = Auth::user()->id;
-        $decision_maker->save($request->all());
+        $user = User::where('id', $id)->first();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        if($request->password != ""){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
         return redirect('/decision-maker');
     }
 
@@ -106,8 +121,8 @@ class DecisionMakerController extends Controller
      */
     public function destroy(Request $request)
     {
-        $decision_maker = DecisionMaker::where('id', $request->id)->first();
-        $decision_maker->delete();
+        $user = User::where('id', $request->id)->first();
+        $user->delete();
         return redirect('/decision-maker');
     }
 }

@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete_category']);
 
         $administrator = Role::create(['name' => 'administrator']);
-        $user_only = Role::create(['name' => 'user_only']);
+        $decision_maker = Role::create(['name' => 'decision_maker']);
 
         $administrator->givePermissionTo(Permission::all());
 
@@ -55,19 +55,12 @@ class DatabaseSeeder extends Seeder
         $user->save();
         $user->assignRole($administrator);
 
-        $user_only->givePermissionTo([
-            'create_decision_maker',
-            'update_decision_maker',
-            'read_decision_maker',
-            'delete_decision_maker'
-        ]);
-
         School::create(['name' => 'MA AR-Risalah']);
         School::create(['name' => 'MA Tarbiyah Islamiyah']);
         School::create(['name' => 'MA PGAI Sumatera Barat']);
 
-        DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
-        DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
+        // DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
+        // DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Michael']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
 

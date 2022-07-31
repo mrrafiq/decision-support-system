@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('decision_makers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('name', 255);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('session_id')->nullable()->constrained('decision_sessions');
             $table->timestamps();
         });
     }
