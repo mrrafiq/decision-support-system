@@ -11,6 +11,7 @@ use App\Http\Controllers\CalculateController;
 use App\Http\Controllers\AhpController;
 use App\Http\Controllers\ArasController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DecisionSessionController;
 
 
 /*
@@ -48,10 +49,10 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::prefix('user-categories')->group(function () {
         Route::get('/', [UserCategoriesController::class, 'index'])->name('user-categories');
-        Route::get('/create', [UserCategoriesController::class, 'create'])->name('create-categories');
-        Route::post('/store', [UserCategoriesController::class, 'store'])->name('store-categories');
-        Route::get('/edit', [UserCategoriesController::class, 'edit'])->name('edit-categories');
-        Route::post('/update', [UserCategoriesController::class, 'update'])->name('update-categories');
+        Route::get('/create/{id}', [UserCategoriesController::class, 'create'])->name('create-categories');
+        Route::post('/store/{id}', [UserCategoriesController::class, 'store'])->name('store-categories');
+        Route::get('/edit/{id}', [UserCategoriesController::class, 'edit'])->name('edit-categories');
+        Route::post('/update/{id}', [UserCategoriesController::class, 'update'])->name('update-categories');
         // Route::delete('/destroy/{id}', [UserCategoriesController::class, 'destroy'])->name('destroy-categories');
     });
 
@@ -66,7 +67,7 @@ Route::group(['middleware' => ['auth']],function () {
 
         Route::prefix('school')->group(function () {
             Route::get('/', [SchoolController::class, 'index'])->name('school');
-            ROute::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
+            Route::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
             Route::get('/create', [SchoolController::class, 'create'])->middleware('permission:create_school')->name('create-school');
             Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->middleware('permission:create_school')->name('create-detail');
             Route::post('/store', [SchoolController::class, 'store'])->middleware('permission:create_school')->name('store-school');
@@ -86,5 +87,20 @@ Route::group(['middleware' => ['auth']],function () {
         Route::post('/store/{id}', [ArasController::class, 'store'])->name('store-aras');
         Route::get('/direction/{id}', [ArasController::class, 'direction'])->name('direction');
         Route::post('/set-decision-maker/{id}', [ArasController::class, 'setDecisionMaker'])->name('set-decision-maker');
+    });
+
+    Route::prefix('decision-session')->group(function() {
+        Route::get('/', [DecisionSessionController::class, 'index'])->name('decision-session');
+        Route::get('/create', [DecisionSessionController::class, 'create'])->name('create-decision-session');
+        Route::get('/edit/{id}', [DecisionSessionController::class, 'edit'])->name('edit-decision-session');
+        Route::get('/show/{id}', [DecisionSessionController::class, 'show'])->name('show-decision-session');
+        Route::post('/store', [DecisionSessionController::class, 'store'])->name('store-decision-session');
+        Route::post('/update/{id}', [DecisionSessionController::class, 'update'])->name('update-decision-session');
+        Route::get('/add/{id}', [DecisionSessionController::class, 'addDecisionMaker'])->name('add-dm-session');
+        Route::post('/store-dm/{id}', [DecisionSessionController::class, 'storeDecisionMaker'])->name('store-dm-session');
+        Route::get('/edit-dm/{id}', [DecisionSessionController::class, 'editDecisionMaker'])->name('edit-dm-session');
+        Route::post('/update-dm/{id}', [DecisionSessionController::class, 'updateDecisionMaker'])->name('update-dm-session');
+        Route::post('/delete-dm/{id}', [DecisionSessionController::class, 'deleteDecisionMaker'])->name('delete-dm-session');
+        Route::delete('/destroy/{id}', [DecisionSessionController::class, 'destroy'])->name('destroy-decision-session');
     });
 });

@@ -42,7 +42,15 @@
                         {{ $data->name }}
                         @endif
                     </td>
-                    <td class="px-4 py-2 text-gray-700 whitespace-nowrap">{{ $data->type }}</td>
+                    <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
+                        @if ($data->type === 0)
+                            Cost
+                        @elseif ($data->type == 1)
+                            Benefit
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                         <div class="flex flex-inline place-content-center">
                             <a href="{{url('category/edit/'.$data->id)}}">
