@@ -15,7 +15,7 @@ class AhpController extends Controller
     public function index($id)
     {
         $decision_maker = DecisionMaker::where('id', $id)->first();
-        $user_categories = UserCategories::with(['category'])->where('user_id', Auth::user()->id)->get();
+        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
         $ahp = Ahp::where('decision_maker_id', $id)->get();
         $scale = Scale::get();
         // dd($user_categories);
@@ -39,9 +39,8 @@ class AhpController extends Controller
         foreach ($data as $key => $value) {
             $items[] = $value;
         }
-
-        $user_categories = UserCategories::where('user_id', Auth::user()->id)->get();
-        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->get();
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $user_categories = UserCategories::where('session_id', $decision_maker->session_id)->get();
         $total_categories = count($user_categories);
 
         //getting data from request and place it into an array
@@ -149,31 +148,15 @@ class AhpController extends Controller
             for ($i=0; $i < count($values); $i++) {
                 $ahp = new Ahp;
                 $ahp->decision_maker_id = $id;
+                $ahp->session_id = $decision_maker->session_id;
                 $ahp->category_id = $user_categories[$i]->category_id;
                 $ahp->weight = $weight[$i];
                 $ahp->save();
             }
-            // //fetching all decision_maker id
-            $data_id = [];
-            for ($i=0; $i < count($decision_maker); $i++) {
-                array_push($data_id, $decision_maker[$i]->id);
-            }
-            // dd($decision_maker);
-
-            for ($i=0; $i < count($data_id); $i++) {
-                if ($id == $data_id[$i]) {
-                    if ($i == count($data_id)-1) {
-                        return redirect('/calculate');
-                    }
-                    //return to next page
-                    // dd($data_id[1]);
-                    return redirect()->route('weighting', ['id' => $data_id[$i+1]]);
-                }
-
-            }
+            return redirect('/calculate');
         }
         else{
-            return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan!');
+            return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.$cr);
         }
     }
 }

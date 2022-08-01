@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('borda', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('session_id')->constrained('decision_sessions');
             $table->foreignId('school_id')->constrained();
             $table->float('score', 8, 6);
             $table->integer('rank');

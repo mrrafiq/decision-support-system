@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\School;
 use App\Models\Category;
 use App\Models\DecisionMaker;
+use App\Models\DecisionSession;
 use App\Models\UserCategories;
 use App\Models\Scale;
 use Illuminate\Database\Seeder;
@@ -55,9 +56,29 @@ class DatabaseSeeder extends Seeder
         $user->save();
         $user->assignRole($administrator);
 
+        $dm = new User;
+        $dm->username = 'Andi';
+        $dm->email = 'andi@example.com';
+        $dm->password = Hash::make('password');
+        $dm->save();
+        $dm->assignRole($decision_maker);
+
+        $dm2 = new User;
+        $dm2->username = 'Yanti';
+        $dm2->email = 'yanti@example.com';
+        $dm2->password = Hash::make('password');
+        $dm2->save();
+        $dm2->assignRole($decision_maker);
+
         School::create(['name' => 'MA AR-Risalah']);
         School::create(['name' => 'MA Tarbiyah Islamiyah']);
         School::create(['name' => 'MA PGAI Sumatera Barat']);
+
+        DecisionSession::create(['name' => 'Pertama']);
+        DecisionSession::create(['name' => 'Kedua']);
+
+        DecisionMaker::create(['user_id' => 2, 'session_id' => 1]);
+        DecisionMaker::create(['user_id' => 3, 'session_id' => 1]);
 
         // DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
@@ -75,10 +96,10 @@ class DatabaseSeeder extends Seeder
         Category::create(['name' => 'fasilitas', 'type' => '1']);
         Category::create(['name' => 'ekstrakurikuler', 'type' => '1']);
 
-        UserCategories::create(['user_id' => 1, 'category_id' => 1]);
-        UserCategories::create(['user_id' => 1, 'category_id' => 3]);
-        UserCategories::create(['user_id' => 1, 'category_id' => 5]);
-        UserCategories::create(['user_id' => 1, 'category_id' => 6]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 1]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 3]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 5]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 6]);
 
         Scale::create(['point' => 1, 'status' => "Sangat Tidak Penting"]);
         Scale::create(['point' => 2, 'status' => "Tidak Terlalu Penting"]);

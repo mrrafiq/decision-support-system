@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Calculate;
 use App\Models\DecisionMaker;
+use App\Models\DecisionSession;
 use App\Models\UserCategories;
 use App\Models\Ahp;
 use App\Models\Aras;
@@ -22,122 +23,70 @@ class CalculateController extends Controller
      */
     public function index()
     {
-        $ahp = Ahp::join('decision_makers', 'ahp.decision_maker_id', '=', 'decision_makers.id')
-                ->where('decision_makers.user_id', Auth::user()->id)->get();
-        $decision_maker_total = DecisionMaker::where('user_id', Auth::user()->id)->get();
-        $schools = School::get();
-        $user_categories = UserCategories::get();
-        $total_data = count($schools) * count($user_categories);
-        $arr_data = [];
-        foreach($decision_maker_total as $key){
-            $arr_data[] = $key->id;
-        }
-        $aras = Aras::whereIn('decision_maker_id', $arr_data)->get();
-        $data = Calculate::join('decision_makers', 'calculates.decision_maker_id', '=', 'decision_makers.id')
-                ->whereIn('decision_makers.id', $arr_data)->get();
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $check = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
+        $calculate = Calculate::with('school')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+        $ahp = Ahp::with('category')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+        $school = School::first();
 
-        $count = [];
-        foreach ($data as $key) {
-            $count [] = $key->decision_maker_id;
-        }
-
-        $arr = [];
-        if (count($data) != 0) {
-            $aras = Aras::whereIn('decision_maker_id', $arr_data)->get();
-            //collecting $data into $arr
-            $check = [];
-            foreach ($aras as $key) {
-                $check[] = $key->decision_maker_id;
-            }
-            for ($i = 0; $i < count($data); $i++) {
-                $sch = School::where('id', $data[$i]->school_id)->first();
-                $arr[] = array("decision_maker_name" => $data[$i]->name,
-                                "school_name" => $sch->name,
-                                "rank" => $data[$i]->rank,
-                                "score" => $data[$i]->score);
-            }
-            // dd($arr);
-
-            $total_data = count($schools) * count($user_categories) * count(array_unique($count));
-
-            if($total_data < count($aras)){
-                for ($i=0; $i < count($arr_data); $i++) {
-                    $aras = Aras::where('decision_maker_id', $arr_data[$i])->get();
-                    if (count($aras) == null) {
-                        $decision_maker = DecisionMaker::where('id', $arr_data[$i])->first();
-                        return view('calculate.index',[
-                            'title' => 'Calculate',
-                            'decision_maker_id' => $decision_maker,
-                            'aras' => $aras,
-                            'decision_maker' => $decision_maker_total,
-                            'ahp' => $ahp,
-                            'data' => $arr,
-                            'total_data' => $total_data,
-                            'school' => $schools,
-                            'count' => $count
-                        ]);
-
-                    }
-                }
-            }
-            else{
-                //if index.calculate is reloading, the data still inputing into borda table
-                $this->borda(Auth::user()->id);
-                return view('calculate.index',[
-                    'title' => 'Calculate',
-                    'aras' => $aras,
-                    'decision_maker' => $decision_maker_total,
-                    'ahp' => $ahp,
-                    'data' => $arr,
-                    'total_data' => $total_data,
-                    'school' => $schools,
-                    'count' => $count
-                ]);
-            }
-
+        //check if the session has more than 1 decicion maker
+        if (count($check) <= 1) {
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'dm_total' => $check,
+                'decision_maker' => $decision_maker,
+                'ahp' => $ahp,
+                'school' => $school,
+                'aras' => $calculate
+            ]);
         }
 
-
-        for ($i=0; $i < count($arr_data); $i++) {
-            $aras = Aras::where('decision_maker_id', $arr_data[$i])->get();
-            if (count($aras) == null) {
-                $decision_maker = DecisionMaker::where('id', $arr_data[$i])->first();
-                return view('calculate.index',[
-                    'title' => 'Calculate',
-                    'decision_maker_id' => $decision_maker,
-                    'aras' => $aras,
-                    'decision_maker' => $decision_maker_total,
-                    'ahp' => $ahp,
-                    'data' => [],
-                    'school' => $schools,
-                    'total_data' => $total_data
-                ]);
-
-            }
+        if (count($calculate) != 0) {
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'dm_total' => $check,
+                'decision_maker' => $decision_maker,
+                'ahp' => $ahp,
+                'aras' => $calculate
+            ]);
         }
-        
-        return view('calculate.index',[
-            'title' => 'Calculate',
-            'aras' => $aras,
-            'decision_maker' => $decision_maker_total,
-            'ahp' => $ahp,
-            'count'=>$count,
-            'data' => $arr,
-            'school' => $schools,
-            'total_data' => $total_data
-        ]);
+
+        if (count($ahp) == 0) {
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'dm_total' => $check,
+                'ahp' => $ahp,
+                'decision_maker' => $decision_maker,
+                'aras' => $calculate
+            ]);
+        }
+        else {
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'dm_total' => $check,
+                'decision_maker' => $decision_maker,
+                'ahp' => $ahp,
+                'school' => $school,
+                'aras' => $calculate
+            ]);
+        }
+
     }
 
     public function result($id)
     {
         $schools = School::get();
-        $categories = UserCategories::where('user_id',  Auth::user()->id)->get();
-        $decision_makers = DecisionMaker::where('id', $id)->first();
+        $decision_maker = DecisionMaker::where('id', $id)->first();
+        $categories = UserCategories::where('session_id',  $decision_maker->session_id)->get();
+        $arr_categories = [];
+        foreach ($categories as $key => $value) {
+            $arr_categories [] = $value->category_id;
+        }
         $arr_row = [];
         for ($i=0; $i < count($schools); $i++) {
             $arr_col = [];
             for ($j=0; $j < count($categories); $j++) {
-                $aras = Aras::where('decision_maker_id', $decision_makers->id)
+                $aras = Aras::where('decision_maker_id', $decision_maker->id)
                         ->where('category_id', $categories[$j]->category_id)
                         ->where('school_id', $schools[$i]->id)
                         ->first();
@@ -150,7 +99,7 @@ class CalculateController extends Controller
         $arr_null = [];
         // calling type value of each user categories
         $type = UserCategories::join('categories', 'user_categories.category_id', '=', 'categories.id')
-                    ->where('user_id', Auth::user()->id)
+                    ->where('user_categories.session_id', $decision_maker->session_id)
                     ->get();
         //find max or min of each data in $arr_row then add it into $arr_null
         for ($i=0; $i < count($categories); $i++) {
@@ -295,17 +244,24 @@ class CalculateController extends Controller
         for ($i=0; $i < count($ranked_school); $i++) {
             $calculate = new Calculate;
             $calculate->decision_maker_id = $id;
+            $calculate->session_id = $decision_maker->session_id;
             $calculate->school_id = $ranked_school[$i]["id"];
             $calculate->rank = $i+1;
             $calculate->score = $ranked_school[$i]["value"];
             $calculate->save();
         }
 
+        $dm_total = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
+        $total_data = count($schools) * count($dm_total);
+        $current = Calculate::where('session_id', $decision_maker->session_id)->get();
+        if (count($current) == $total_data) {
+            $this->borda($decision_maker->session_id);
+        }
     }
 
 
     public function borda($id){
-        $dm = DecisionMaker::where('user_id', $id)->get();
+        $dm = DecisionMaker::where('session_id', $id)->get();
         $decision_maker = [];
         foreach ($dm as $key => $value) {
             $decision_maker [] = $value->id;
@@ -372,7 +328,7 @@ class CalculateController extends Controller
 
         for ($i=0; $i < count($final); $i++) {
             $borda = new Borda;
-            $borda->user_id = $id;
+            $borda->session_id = $id;
             $borda->school_id = $final[$i]['school_id'];
             $borda->score = $final[$i]['score'];
             $borda->rank = $final[$i]['rank'];

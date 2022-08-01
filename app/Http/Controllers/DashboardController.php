@@ -7,6 +7,7 @@ use App\Http\Controllers\CalculateController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Borda;
 use App\Models\DecisionMaker;
+use App\Models\UserCategories;
 
 class DashboardController extends Controller
 {
@@ -17,12 +18,23 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $borda = Borda::with('school')->where('user_id', Auth::user()->id)->get();
-
-        return view('dashboard/index', [
-            'title' => 'Dashboard',
-            'data' => $borda
-        ]);
+        $dm = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
+        $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
+        if($dm !== null){
+            return view('dashboard/index', [
+                'title' => 'Dashboard',
+                'categories' => $user_categories,
+                'data' => $borda
+            ]);
+        }
+        else{
+            return view('dashboard/index', [
+                'title' => 'Dashboard',
+                'categories' => $user_categories,
+                'data' => $borda
+            ]);
+        }
     }
 
     /**

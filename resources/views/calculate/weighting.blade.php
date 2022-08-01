@@ -3,10 +3,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div>
     <p class="text-4xl">Weighting</p>
-    <p class="text-base text-gray-500 mt-4">Masukkan perbandingan kriteria</p>
+    <p class="text-base text-gray-500 mt-4 mb-12">Masukkan perbandingan kriteria</p>
 </div>
 @if (Session::has('error'))
-    <div class="basis-1/2 border-2 mt-6 rounded-2xl border-red-200 text-red-900 py-2 px-3 bg-red-100"
+    <div class="basis-1/2 border-2 mt-6 mb-6 rounded-2xl border-red-200 text-red-900 py-2 px-3 bg-red-100"
         role="alert">
         {{ Session::get('error') }}
     </div>
@@ -14,9 +14,6 @@
 <div>
     <form action="{{url('calculate/process/'. $decision_maker->id)}}" method="POST">
         @csrf
-        <div class="mt-8 mb-4">
-            <p class="text-lg">Decision Maker: <span class="font-bold">{{$decision_maker->name}}</span></p>
-        </div>
         <hr>
         <div class="mt-4 mb-4 flex grid grid-cols-3 gap-x-12 font-bold">
             <p>Kriteria Pertama</p>

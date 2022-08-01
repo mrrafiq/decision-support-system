@@ -7,7 +7,6 @@ use App\Http\Controllers\CalculateController;
 use App\Models\Aras;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ahp;
-use App\Models\DecisionMakerStatus;
 use App\Models\School;
 use App\Models\UserCategories;
 use App\Models\Calculate;
@@ -18,7 +17,8 @@ class ArasController extends Controller
 {
     public function index($id)
     {
-        $user_categories = UserCategories::with('category')->where('user_id', Auth::user()->id)->get();
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
         $school = School::where('id', $id)->first();
 
         return view('calculate.alternate',[
@@ -37,13 +37,20 @@ class ArasController extends Controller
             $items[] = $value;
         }
 
-        $decision_maker = DecisionMakerStatus::with('decision_maker')->latest()->first();
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
         $school = School::get();
-        $user_categories = UserCategories::where('user_id', Auth::user()->id)->get();
+        $arr_school = [];
+        foreach ($school as $key => $value) {
+            $arr_school [] = $value->id;
+        }
+        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
         // dd($user_categories);
+
+
         for ($i=0; $i < count($user_categories); $i++) {
             $aras = new Aras;
-            $aras->decision_maker_id = $decision_maker->decision_maker_id;
+            $aras->decision_maker_id = $decision_maker->id;
+            $aras->session_id = $decision_maker->session_id;
             $aras->category_id = $user_categories[$i]->category_id;
             $aras->school_id = $id;
             if ($user_categories[$i]->category_id == 1) {
@@ -80,20 +87,18 @@ class ArasController extends Controller
             }else{
                 $aras->value = $items[$i+1];
             }
-            $aras->save();
+            $check = Aras::where('decision_maker_id', $decision_maker->id)->where('school_id', $id)->where('category_id', $user_categories[$i]->category_id)->first();
+            if ($check == null) {
+                $aras->save();
+            }
         }
 
-        $dm = DecisionMaker::where('user_id', Auth::user()->id)->get();
-        $dm_data = [];
-        foreach ($dm as $key => $value) {
-            $dm_data [] = $value->id;
-        }
-        
+        $latest_page = School::max('id');
         //redirecting to index because of total of the school that counted
-        if ($id == count($school)) {
+        if ($id == $latest_page) {
             $calculate = new CalculateController;
-            $calculate->result($decision_maker->decision_maker_id);
-            return redirect()->route('direction',['id' => ($decision_maker->decision_maker_id)+1]);
+            $calculate->result($decision_maker->id);
+            return redirect('/calculate');
         }
 
         return redirect()->route('alternate', ['id' => $id+1]);

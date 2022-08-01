@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('aras', function (Blueprint $table) {
             $table->id();
             $table->foreignId('decision_maker_id')->constrained();
+            $table->foreignId('session_id')->constrained('decision_sessions');
             $table->foreignId('category_id')->constrained();
             $table->foreignId('school_id')->constrained();
             $table->integer('value');
