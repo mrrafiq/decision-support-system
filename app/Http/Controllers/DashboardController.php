@@ -19,9 +19,11 @@ class DashboardController extends Controller
     public function index()
     {
         $dm = DecisionMaker::where('user_id', Auth::user()->id)->first();
-        $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
-        $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
+        $borda = null;
         if($dm !== null){
+            $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
+            $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
+
             return view('dashboard/index', [
                 'title' => 'Dashboard',
                 'categories' => $user_categories,
@@ -31,8 +33,6 @@ class DashboardController extends Controller
         else{
             return view('dashboard/index', [
                 'title' => 'Dashboard',
-                'categories' => $user_categories,
-                'data' => $borda
             ]);
         }
     }
