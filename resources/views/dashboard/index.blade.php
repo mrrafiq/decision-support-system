@@ -4,7 +4,7 @@
     @role('decision_maker')
     @if (count($data) != 0)
         <p class="mt-6 mb-3 text-lg">Berikut merupakan hasil perhitungan akhir dari masing-masing pembuat keputusan.</p>
-        <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100">
+        <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-4/5">
             <thead>
                 <tr>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
@@ -28,8 +28,8 @@
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                         {{$data->school->name}}
                     </td>
-                    <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                        {{$data->score}}
+                    <td class="px-4 py-2 font-medium text-gray-700 whitespace-nowrap">
+                        {{number_format($data->score, 2)}}
                     </td>
                 </tr>
                 @endforeach

@@ -13,6 +13,10 @@
                     @endforeach
                 </select>
             </div>
+            <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
+                <input id="weight" class=" pl-2 w-full outline-none border-none" type="text" name="weight" placeholder="Bobot"
+                    required value="{{$data->weight}}" />
+            </div>
             <div class="flex items-center justify-between max-w-full">
                 <div></div>
                 <button type="submit"

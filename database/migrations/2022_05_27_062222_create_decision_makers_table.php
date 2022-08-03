@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('session_id')->nullable()->constrained('decision_sessions');
+            $table->float('weight', 8, 2);
             $table->timestamps();
         });
     }

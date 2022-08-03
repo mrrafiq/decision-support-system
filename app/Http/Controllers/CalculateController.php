@@ -24,10 +24,22 @@ class CalculateController extends Controller
     public function index()
     {
         $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
-        $check = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
-        $calculate = Calculate::with('school')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
-        $ahp = Ahp::with('category')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+        $check = null;
+        $calculate = null;
+        $ahp = null;
+        if($decision_maker != null){
+            $check = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
+            $calculate = Calculate::with('school')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+            $ahp = Ahp::with('category')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+        }
         $school = School::first();
+
+        //check if the user is administrator
+        if ($check == null) {
+            return view('calculate.index', [
+                'title' => 'Calculate',
+            ]);
+        }
 
         //check if the session has more than 1 decicion maker
         if (count($check) <= 1) {
@@ -247,7 +259,7 @@ class CalculateController extends Controller
             $calculate->session_id = $decision_maker->session_id;
             $calculate->school_id = $ranked_school[$i]["id"];
             $calculate->rank = $i+1;
-            $calculate->score = $ranked_school[$i]["value"];
+            $calculate->score = $ranked_school[$i]["value"] * $decision_maker->weight;
             $calculate->save();
         }
 

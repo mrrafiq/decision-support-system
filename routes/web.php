@@ -56,28 +56,28 @@ Route::group(['middleware' => ['auth']],function () {
         // Route::delete('/destroy/{id}', [UserCategoriesController::class, 'destroy'])->name('destroy-categories');
     });
 
-        Route::prefix('category')->group(function() {
-            Route::get('/', [CategoryController::class, 'index'])->middleware('permission:read_category')->name('category');
-            Route::get('/create', [CategoryController::class, 'create'])->middleware('permission:create_category')->name('create-category');
-            Route::post('/store', [CategoryController::class, 'store'])->middleware('permission:create_category')->name('store-category');
-            Route::get('/edit/{id}', [CategoryController::class, 'edit'])->middleware('permission:update_category')->name('edit-category');
-            Route::post('/update/{id}', [CategoryController::class, 'update'])->middleware('permission:update_category')->name('update-category');
-            Route::delete('/destroy/{id}', [CategoryController::class, 'update'])->middleware('permission:update_category')->name('update-category');
-        });
+    Route::prefix('category')->group(function() {
+        Route::get('/', [CategoryController::class, 'index'])->middleware('permission:read_category')->name('category');
+        Route::get('/create', [CategoryController::class, 'create'])->middleware('permission:create_category')->name('create-category');
+        Route::post('/store', [CategoryController::class, 'store'])->middleware('permission:create_category')->name('store-category');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->middleware('permission:update_category')->name('edit-category');
+        Route::post('/update/{id}', [CategoryController::class, 'update'])->middleware('permission:update_category')->name('update-category');
+        Route::delete('/destroy/{id}', [CategoryController::class, 'update'])->middleware('permission:update_category')->name('update-category');
+    });
 
-        Route::prefix('school')->group(function () {
-            Route::get('/', [SchoolController::class, 'index'])->name('school');
-            Route::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
-            Route::get('/create', [SchoolController::class, 'create'])->middleware('permission:create_school')->name('create-school');
-            Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->middleware('permission:create_school')->name('create-detail');
-            Route::post('/store', [SchoolController::class, 'store'])->middleware('permission:create_school')->name('store-school');
-            Route::post('/store-detail/{id}', [SchoolDetailController::class, 'store'])->middleware('permission:read_school')->name('store-detail');
-            Route::get('/edit/{id}', [SchoolController::class, 'edit'])->middleware('permission:update_school')->name('edit-school');
-            Route::get('/edit-detail/{id}', [SchoolDetailController::class, 'edit'])->middleware('permission:update_school')->name('edit-detail');
-            Route::post('/update/{id}', [SchoolController::class, 'update'])->middleware('permission:update_school')->name('update-school');
-            Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->middleware('permission:update_school')->name('update-detail');
-            Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->middleware('permission:delete_school')->name('destroy-school');
-        });
+    Route::prefix('school')->group(function () {
+        Route::get('/', [SchoolController::class, 'index'])->name('school');
+        Route::get('/show/{id}', [SchoolDetailController::class, 'show'])->name("show-school");
+        Route::get('/create', [SchoolController::class, 'create'])->middleware('permission:create_school')->name('create-school');
+        Route::get('/create-detail/{id}', [SchoolDetailController::class, 'create'])->middleware('permission:create_school')->name('create-detail');
+        Route::post('/store', [SchoolController::class, 'store'])->middleware('permission:create_school')->name('store-school');
+        Route::post('/store-detail/{id}', [SchoolDetailController::class, 'store'])->middleware('permission:read_school')->name('store-detail');
+        Route::get('/edit/{id}', [SchoolController::class, 'edit'])->middleware('permission:update_school')->name('edit-school');
+        Route::get('/edit-detail/{id}', [SchoolDetailController::class, 'edit'])->middleware('permission:update_school')->name('edit-detail');
+        Route::post('/update/{id}', [SchoolController::class, 'update'])->middleware('permission:update_school')->name('update-school');
+        Route::post('/update-detail/{id}', [SchoolDetailController::class, 'update'])->middleware('permission:update_school')->name('update-detail');
+        Route::delete('/destroy/{id}', [SchoolController::class, 'destroy'])->middleware('permission:delete_school')->name('destroy-school');
+    });
 
     Route::prefix('calculate')->group(function (){
         Route::get('/', [CalculateController::class, 'index'])->name('calculate');

@@ -3,14 +3,54 @@
     <div>
         <p class="text-4xl">{{$session->name}}</p>
     </div>
+    @if (count($borda) != 0)
     <div class="mt-12">
-        <div class="flex items-center justify-between">
-            <div></div>
-            <button
-                class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
-                <a href="{{ url('decision-session/add/' . $session->id) }}">Add+</a>
-            </button>
-        </div>
+        <p class="text-xl">Hasil Perhitungan</p>
+        <p class="text-sm text-gray-500">Berikut merupakan hasil perhitungan dari setiap decision maker pada sesi ini.</p>
+        <table class="w-full text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        Rank
+                    </th>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        School
+                    </th>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        Score
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200">
+                @foreach ($borda as $item)
+                <tr>
+                    <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                        {{ $item->rank }}
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        {{ $item->school->name }}
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        {{ number_format($item->score, 2) }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
+    <div class="mt-12 mb-8">
+        <p class="text-xl">Decision Maker</p>
+        @if (count($borda) == 0)
+            <div class="flex items-center justify-between">
+                <div></div>
+                <button
+                    class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
+                    <a href="{{ url('decision-session/add/' . $session->id) }}">Add+</a>
+                </button>
+            </div>
+        @endif
         <table class="w-full text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
             <thead>
                 <tr>
@@ -21,11 +61,16 @@
                         Username
                     </th>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        Bobot
+                    </th>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
                         Created at
                     </th>
+                    @if (count($borda) == 0)
                     <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                         Action
                     </th>
+                    @endif
                 </tr>
             </thead>
 
@@ -38,10 +83,14 @@
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                         {{ $data->user->username }}
                     </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        {{ $data->weight }}
+                    </td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                         {{ $data->created_at }}
                     </td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
+                        @if (count($borda) == 0)
                         <div class="flex flex-inline place-content-center">
                             <a href="{{url('decision-session/edit-dm/'.$data->id)}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500 hover:scale-125 mr-4"
@@ -63,11 +112,12 @@
                                 </button>
                             </form>
                         </div>
-
+                        @endif
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
 @endsection

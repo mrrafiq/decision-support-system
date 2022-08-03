@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DecisionSession;
 use App\Models\DecisionMaker;
+use App\Models\Borda;
 use Illuminate\Http\Request;
 
 class DecisionSessionController extends Controller
@@ -46,6 +47,7 @@ class DecisionSessionController extends Controller
         $session->name = $request->name;
         $session->save();
         return redirect('/decision-session');
+
     }
 
     /**
@@ -58,10 +60,13 @@ class DecisionSessionController extends Controller
     {
         $decision_maker = DecisionMaker::with('user')->where('session_id', $id)->get();
         $session = DecisionSession::where('id', $id)->first();
+        $borda = Borda::with('school')->where('session_id', $id)->get();
+        // dd($borda);
         return view('decision-session.show', [
             'title' => 'Sessions',
             'session' => $session,
-            'data' => $decision_maker
+            'data' => $decision_maker,
+            'borda' => $borda
         ]);
     }
 
@@ -136,6 +141,7 @@ class DecisionSessionController extends Controller
     {
         $dm = DecisionMaker::where('id', $id)->first();
         $dm->session_id = $request->session_id;
+        $dm->weight = $request->weight;
         $dm->save();
 
         return redirect()->route('show-decision-session', ['id' => $request->session_id]);
