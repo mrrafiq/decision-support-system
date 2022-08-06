@@ -106,15 +106,12 @@ class AhpController extends Controller
             array_push($normalized, $temp);
         }
 
-        //Make $values array is same as $normalized
-        $values = $normalized;
-
         //find weight of each category
         $weight = [];
         for ($i=0; $i < count($values); $i++) {
             $temp = 0;
             for ($j=0; $j < count($values); $j++) {
-                $temp += $values[$i][$j];
+                $temp += $normalized[$i][$j];
             }
             $temp = $temp/count($values);
             array_push($weight, $temp);
@@ -124,22 +121,44 @@ class AhpController extends Controller
         // verify that the calculation is in range off error tolerance
         // (CR <= 0.1) ? true : false
 
+        //Make an array contains $values[$i][$j] * $weight[$i]
+        $arr_lmax = [];
+        for ($i=0; $i < count($values); $i++) {
+            $temp = [];
+            for ($j=0; $j < count($values); $j++) {
+                $temp [] = $values[$j][$i] * $weight[$i];
+            }
+            array_push($arr_lmax, $temp);
+            unset($temp);
+        }
+
         //find lmax for each category
         $lmax = [];
-        for ($i=0; $i < count($values); $i++) {
-            $temp = $total[$i] * $weight[$i];
+        for ($i=0; $i < count($arr_lmax); $i++) {
+            $temp = 0;
+            for ($j=0; $j < count($arr_lmax); $j++) {
+                $temp += $arr_lmax[$j][$i];
+            }
             array_push($lmax, $temp);
+            unset($temp);
         }
-        unset($temp);
+
+        $lmax_weighted =[];
+        for ($i=0; $i < count($lmax); $i++) {
+            $lmax_weighted [] = $lmax[$i] / $weight[$i];
+        }
 
         // calculating for CI
         $lmax_total = 0;
         for ($i=0; $i < count($values); $i++) {
-            $lmax_total += $lmax[$i];
+            $lmax_total += $lmax_weighted[$i];
         }
 
-        $ci = ($lmax_total - count($values)) / (count($values) - 1);
-        $ir = [0, 0, 5.8, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49];
+        $lmax = $lmax_total/count($values);
+
+        $ci = ($lmax - count($values)) / (count($values) - 1);
+
+        $ir = [0, 0, 5.8, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59];
 
         $cr = $ci/$ir[count($values)-1];
 
@@ -156,7 +175,7 @@ class AhpController extends Controller
             return redirect('/calculate');
         }
         else{
-            return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.$cr);
+            return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.number_format($cr,2));
         }
     }
 }
