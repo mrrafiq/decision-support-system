@@ -31,8 +31,12 @@ class DashboardController extends Controller
             ]);
         }
         else{
+            $borda = [];
+            $user_categories = [];
             return view('dashboard/index', [
                 'title' => 'Dashboard',
+                'data' => $borda,
+                'categories' => $user_categories,
             ]);
         }
     }

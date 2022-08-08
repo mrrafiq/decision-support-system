@@ -62,6 +62,7 @@ class DecisionMakerController extends Controller
         $dm = new DecisionMaker;
         $dm->user_id = $new->id;
         $dm->session_id = null;
+        $user->weight = null;
         $dm->save();
         return redirect('/decision-maker');
     }

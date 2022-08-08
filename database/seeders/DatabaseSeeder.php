@@ -101,14 +101,14 @@ class DatabaseSeeder extends Seeder
         UserCategories::create(['session_id' => 1, 'category_id' => 5]);
         UserCategories::create(['session_id' => 1, 'category_id' => 6]);
 
-        Scale::create(['point' => 1, 'status' => "Sangat Tidak Penting"]);
-        Scale::create(['point' => 2, 'status' => "Tidak Terlalu Penting"]);
-        Scale::create(['point' => 3, 'status' => "Sama Penting"]);
-        Scale::create(['point' => 4, 'status' => "Agak Penting"]);
-        Scale::create(['point' => 5, 'status' => "Penting"]);
-        Scale::create(['point' => 6, 'status' => "Sedikit Lebih Penting"]);
-        Scale::create(['point' => 7, 'status' => "Sangat Penting"]);
-        Scale::create(['point' => 8, 'status' => "Sangat Lebih Penting"]);
-        Scale::create(['point' => 9, 'status' => "Paling Penting"]);
+        Scale::create(['point' => 0.11, 'status' => "Sangat Tidak Penting Penting"]);
+        Scale::create(['point' => 0.14, 'status' => "Jauh Lebih Tidak Penting"]);
+        Scale::create(['point' => 0.20, 'status' => "Tidak Lebih Penting"]);
+        Scale::create(['point' => 0.33, 'status' => "Tidak Cukup Penting"]);
+        Scale::create(['point' => 1, 'status' => "Sama Penting"]);
+        Scale::create(['point' => 3, 'status' => "Cukup Penting"]);
+        Scale::create(['point' => 5, 'status' => "Lebih Penting"]);
+        Scale::create(['point' => 7, 'status' => "Jauh Lebih Penting"]);
+        Scale::create(['point' => 9, 'status' => "Sangat Lebih Penting"]);
     }
 }

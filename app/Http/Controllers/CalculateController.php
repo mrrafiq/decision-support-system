@@ -31,6 +31,12 @@ class CalculateController extends Controller
             $check = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
             $calculate = Calculate::with('school')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
             $ahp = Ahp::with('category')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+        }else{
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'decision_maker' => $decision_maker,
+                'message' => 'Silahkan hubungi administrator untuk pengaturan sesi anda!'
+            ]);
         }
         $school = School::first();
 
@@ -215,7 +221,7 @@ class CalculateController extends Controller
             }
             array_push($optimum, $total);
         }
-        // dd($optimum);
+
         $school_array = [];
         for ($i=0; $i < count( $schools); $i++) {
             $temp_array = array("id" => $schools[$i]->id, "value" => $optimum[$i]);
@@ -235,7 +241,6 @@ class CalculateController extends Controller
             $temp_array = array("id" => $schools[$i]->id, "value" => $utility[$i]);
             array_push($school_utility, $temp_array);
         }
-
         $value = [];
         for ($i=0; $i < count($school_utility); $i++) {
             array_push($value, $school_utility[$i]["value"]);
