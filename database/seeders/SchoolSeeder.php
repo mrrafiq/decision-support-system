@@ -23,7 +23,7 @@ class SchoolSeeder extends Seeder
         School::create(['name' => 'MA Kanzul Ulum']);
         School::create(['name' => 'MA Sabbihisma']);
         School::create(['name' => 'MA Dar El Iman']);
-        School::create(['name' => 'MA Prof. Hamka']);
+        School::create(['name' => 'MA Prof. DR. Hamka']);
 
         //id = 1
         SchoolDetail::create([
