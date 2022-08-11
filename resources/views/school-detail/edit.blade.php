@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">Edit School Detail Data</p>
+        <p class="text-4xl">Edit Detail Profil Sekolah</p>
     </div>
     <div class="mt-12">
         <form action="{{ url('school/update-detail/' . $data->id) }}" method="POST" enctype="multipart/form-data">
@@ -11,59 +11,50 @@
                 <textarea id="description" class="pl-2 w-full outline-none border-none" type="text" name="deskripsi"
                     placeholder="Tuliskan sesuatu......." required rows="10">{{$values[0]}}</textarea>
             </div>
-            <label for="image" class="font-semibold">Gambar</label>
-            <div class="block border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
-                <input id="image"
-                    class="file:py-2 file:px-4
-                        file:rounded-md file:border-0
-                        file:cursor-pointer
-                        file:text-sm file:font-semibold
-                        file:bg-gray-900 file:text-sky-100
-                        hover:file:bg-sky-600 cursor-pointer pl-2 w-full outline-none border-none"
-                    type="file" name="gambar" value="{{$values[1]}}" required />
-            </div>
             <label for="vision" class="font-semibold">Visi</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <textarea id="vision" class=" pl-2 w-full outline-none border-none" type="text" name="visi" placeholder="Visi" required
-                    rows="5">{{$values[2]}}</textarea>
+                    rows="5">{{$values[1]}}</textarea>
             </div>
             <label for="mission" class="font-semibold">Misi</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <textarea id="mission" class=" pl-2 w-full outline-none border-none" type="text" name="misi" placeholder="Misi" required
-                    rows="5">{{$values[3]}}</textarea>
+                    rows="5">{{$values[2]}}</textarea>
             </div>
             <label for="curriculum" class="font-semibold">Kurikulum</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <select name="kurikulum" id="curriculum" class="pl-2 w-full outline-none border-none bg-transparent" required>
-                    <option value="kemenag" {{$values[4] == "kemenag" ? 'selected' : ''}}>Kementerian Agama</option>
-                    <option value="kemendikbud" {{$values[4] == "kemendikbud" ? 'selected' : ''}}>Kementerian Pendidikan dan Kebudayaan</option>
-                    <option value="mandiri" {{$values[4] == "mandiri" ? 'selected' : ''}}>Mandiri</option>
+                    <option value="kemenag" {{$values[3] == "kemenag" ? 'selected' : ''}}>Kementerian Agama</option>
+                    <option value="kemendikbud" {{$values[3] == "kemendikbud" ? 'selected' : ''}}>Kementerian Pendidikan dan Kebudayaan</option>
+                    <option value="mandiri" {{$values[3] == "mandiri" ? 'selected' : ''}}>Mandiri</option>
+                    <option value="kemenag_mandiri" {{$values[3] == "kemenag_mandiri" ? 'selected' : ''}}>Kementerian Agama dan Mandiri</option>
+                    <option value="kemendikbud_mandiri" {{$values[3] == "kemendikbud_mandiri" ? 'selected' : ''}}>Kementerian Pendidikan dan Kebudayaan dan Mandiri</option>
                 </select>
             </div>
             <label for="entry" class="font-semibold">Biaya Pembangunan</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="entry" class=" pl-2 w-full outline-none border-none" type="text" name="biaya_pembangunan"
-                    placeholder="contoh: 5000000" required value="{{$values[5]}}"/>
+                    placeholder="contoh: 5000000" required value="{{$values[4]}}"/>
             </div>
             <label for="monthly" class="font-semibold">Biaya Per-bulan</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="monthly" class=" pl-2 w-full outline-none border-none" type="text" name="biaya_perbulan"
-                    placeholder="contoh: 5000000" required value="{{$values[6]}}"/>
+                    placeholder="contoh: 5000000" required value="{{$values[5]}}"/>
             </div>
             <label for="program" class="font-semibold">Program Unggulan</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="program" class=" pl-2 w-full outline-none border-none" type="text" name="program_unggulan"
-                    placeholder="Tahfiz, Peternakan,..." required value="{{$values[7]}}"/>
+                    placeholder="Tahfiz, Peternakan,..." required value="{{$values[6]}}"/>
             </div>
             <label for="facility" class="font-semibold">Fasilitas</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <input id="facility" class=" pl-2 w-full outline-none border-none" type="text" name="fasilitas"
-                    placeholder="Laundry, Makan harian,...." required value="{{$values[8]}}"/>
+                    placeholder="Laundry, Makan harian,...." required value="{{$values[7]}}"/>
             </div>
             <label for="extracurricular" class="font-semibold">Ekstrakurikuler</label>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <textarea id="extracurricular" class=" pl-2 w-full outline-none border-none" name="ekstrakurikuler"
-                    placeholder="ekstrakurikuler" required rows="5">{{$values[9]}}</textarea>
+                    placeholder="ekstrakurikuler" required rows="5">{{$values[8]}}</textarea>
             </div>
             <div class="flex items-center justify-between">
                 <div></div>

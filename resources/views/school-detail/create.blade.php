@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">Add School Detail Data</p>
+        <p class="text-4xl">Tambahkan Detail Profil Sekolah</p>
     </div>
     <div class="mt-12">
         <form action="{{ url('school/store-detail/' .$data->id) }}" method="POST" enctype="multipart/form-data">
@@ -10,17 +10,6 @@
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
                 <textarea id="description" class="pl-2 w-full outline-none border-none" type="text" name="deskripsi"
                     placeholder="Tuliskan sesuatu......." required rows="10"></textarea>
-            </div>
-            <label for="image" class="font-semibold">Gambar</label>
-            <div class="block border-2 mb-8 py-2 px-3 rounded-2xl mt-4">
-                <input id="image"
-                    class="file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:cursor-pointer
-                            file:text-sm file:font-semibold
-                            file:bg-gray-900 file:text-sky-100
-                            hover:file:bg-sky-600 cursor-pointer pl-2 w-full outline-none border-none"
-                    type="file" name="gambar" required />
             </div>
             <label for="vision" class="font-semibold">Visi</label>
             <div
@@ -41,6 +30,8 @@
                     <option value="kemenag">Kementerian Agama</option>
                     <option value="kemendikbud">Kementerian Pendidikan dan Kebudayaan</option>
                     <option value="mandiri">Mandiri</option>
+                    <option value="kemenag_mandiri">Kementerian Agama dan Mandiri</option>
+                    <option value="kemendikbud_mandiri">Kementerian Pendidikan dan Kebudayaan dan Mandiri</option>
                 </select>
             </div>
             <label for="entry" class="font-semibold">Biaya Pembangunan</label>

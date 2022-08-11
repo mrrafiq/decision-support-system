@@ -70,15 +70,20 @@ class DatabaseSeeder extends Seeder
         $dm2->save();
         $dm2->assignRole($decision_maker);
 
-        School::create(['name' => 'MA AR-Risalah']);
-        School::create(['name' => 'MA Tarbiyah Islamiyah']);
-        School::create(['name' => 'MA PGAI Sumatera Barat']);
+        $dm3 = new User;
+        $dm3->username = 'Budi';
+        $dm3->email = 'budi@example.com';
+        $dm3->password = Hash::make('password');
+        $dm3->save();
+        $dm3->assignRole($decision_maker);
+
 
         DecisionSession::create(['name' => 'Pertama']);
         DecisionSession::create(['name' => 'Kedua']);
 
-        DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.7]);
-        DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.5]);
+        DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.5]);
+        DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.7]);
+        DecisionMaker::create(['user_id' => 4, 'session_id' => 1, 'weight' => 0.7]);
 
         // DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
@@ -86,7 +91,6 @@ class DatabaseSeeder extends Seeder
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Nisa']);
 
         Category::create(['name' => 'deskripsi', 'type' => '0']);
-        Category::create(['name' => 'gambar']);
         Category::create(['name' => 'visi', 'type' => '1']);
         Category::create(['name' => 'misi']);
         Category::create(['name' => 'kurikulum', 'type' => '1']);
@@ -96,12 +100,15 @@ class DatabaseSeeder extends Seeder
         Category::create(['name' => 'fasilitas', 'type' => '1']);
         Category::create(['name' => 'ekstrakurikuler', 'type' => '1']);
 
+        $this->call([SchoolSeeder::class]);
+
         UserCategories::create(['session_id' => 1, 'category_id' => 1]);
-        UserCategories::create(['session_id' => 1, 'category_id' => 3]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 2]);
         UserCategories::create(['session_id' => 1, 'category_id' => 5]);
         UserCategories::create(['session_id' => 1, 'category_id' => 6]);
+        UserCategories::create(['session_id' => 1, 'category_id' => 8]);
 
-        Scale::create(['point' => 0.11, 'status' => "Sangat Tidak Penting Penting"]);
+        Scale::create(['point' => 0.11, 'status' => "Sangat Tidak Penting"]);
         Scale::create(['point' => 0.14, 'status' => "Jauh Lebih Tidak Penting"]);
         Scale::create(['point' => 0.20, 'status' => "Tidak Lebih Penting"]);
         Scale::create(['point' => 0.33, 'status' => "Tidak Cukup Penting"]);

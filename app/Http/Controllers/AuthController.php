@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\DecisionMaker;
 use Auth;
 use Session;
 
@@ -47,6 +48,13 @@ class AuthController extends Controller
             $user->password = Hash::make($request->password);
             $user->assignRole(2);
             $user->save();
+
+            $new = User::latest()->first();
+            $dm = new DecisionMaker;
+            $dm->user_id = $new->id;
+            $dm->session_id = null;
+            $user->weight = null;
+            $dm->save();
             return view('/auth/login');
         }else{
             Session::flash('error', 'Pastikan password konfirmasi benar!');

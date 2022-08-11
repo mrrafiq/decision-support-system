@@ -1,7 +1,7 @@
 @extends('layout/main')
 @section('main')
     <div>
-        <p class="text-4xl">Add School</p>
+        <p class="text-4xl">Tambah Sekolah</p>
     </div>
     <div class="mt-12">
         <form action="{{ route('store-school') }}" method="POST">

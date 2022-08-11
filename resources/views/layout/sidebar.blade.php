@@ -48,7 +48,7 @@
                                 d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                         </svg>
                     </span>
-                    <span class="ml-2 text-sm tracking-wide truncate">School</span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Sekolah</span>
                 </a>
             </li>
             <li>
@@ -59,7 +59,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
                     </span>
-                    <span class="ml-2 text-sm tracking-wide truncate">Calculate</span>
+                    <span class="ml-2 text-sm tracking-wide truncate">Perhitungan</span>
                 </a>
             </li>
             @role('administrator')
@@ -102,7 +102,7 @@
                                     d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">User-Categories</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Session-Categories</span>
                     </a>
                 </li>
                 <li>

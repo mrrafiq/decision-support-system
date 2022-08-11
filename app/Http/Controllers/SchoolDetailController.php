@@ -19,7 +19,7 @@ class SchoolDetailController extends Controller
         $values =[];
         if (count($data) == 0) {
             return view('school-detail.index', [
-                'message' => "Data is empty",
+                'message' => "Data kosong",
                 'name' => null,
                 'data' => $school,
                 'categories' => $categories,
@@ -70,35 +70,27 @@ class SchoolDetailController extends Controller
                 $school_detail->value = $request->deskripsi;
             }
             else if($category[$i]->id == 2){
-                $image = $request->gambar;
-                $file_name = str_replace(" ","_",$image->getClientOriginalName());
-                if($image != $school_detail->value){
-                    $request->gambar->move('storage', $file_name);
-                }
-                $school_detail->value = 'storage/'.$file_name;
-            }
-            else if($category[$i]->id == 3){
                 $school_detail->value = $request->visi;
             }
-            else if($category[$i]->id == 4){
+            else if($category[$i]->id == 3){
                 $school_detail->value = $request->misi;
             }
-            else if($category[$i]->id == 5){
+            else if($category[$i]->id == 4){
                 $school_detail->value = $request->kurikulum;
             }
-            else if($category[$i]->id == 6){
+            else if($category[$i]->id == 5){
                 $school_detail->value = $request->biaya_pembangunan;
             }
-            else if($category[$i]->id == 7){
+            else if($category[$i]->id == 6){
                 $school_detail->value = $request->biaya_perbulan;
             }
-            else if($category[$i]->id == 8){
+            else if($category[$i]->id == 7){
                 $school_detail->value = $request->program_unggulan;
             }
-            else if($category[$i]->id == 9){
+            else if($category[$i]->id == 8){
                 $school_detail->value = $request->fasilitas;
             }
-            else if($category[$i]->id == 10){
+            else if($category[$i]->id == 9){
                 $school_detail->value = $request->ekstrakurikuler;
             }
             $school_detail->save();
@@ -143,35 +135,27 @@ class SchoolDetailController extends Controller
                     $school_detail->value = $request->deskripsi;
                 }
                 else if($category[$i]->id == 2){
-                    $image = $request->gambar;
-                    $file_name = str_replace(" ","_",$image->getClientOriginalName());
-                    if($image != $school_detail->value){
-                        $request->gambar->move('storage', $file_name);
-                    }
-                    $school_detail->value = 'storage/'.$file_name;
-                }
-                else if($category[$i]->id == 3){
                     $school_detail->value = $request->visi;
                 }
-                else if($category[$i]->id == 4){
+                else if($category[$i]->id == 3){
                     $school_detail->value = $request->misi;
                 }
-                else if($category[$i]->id == 5){
+                else if($category[$i]->id == 4){
                     $school_detail->value = $request->kurikulum;
                 }
-                else if($category[$i]->id == 6){
+                else if($category[$i]->id == 5){
                     $school_detail->value = $request->biaya_pembangunan;
                 }
-                else if($category[$i]->id == 7){
+                else if($category[$i]->id == 6){
                     $school_detail->value = $request->biaya_perbulan;
                 }
-                else if($category[$i]->id == 8){
+                else if($category[$i]->id == 7){
                     $school_detail->value = $request->program_unggulan;
                 }
-                else if($category[$i]->id == 9){
+                else if($category[$i]->id == 8){
                     $school_detail->value = $request->fasilitas;
                 }
-                else if($category[$i]->id == 10){
+                else if($category[$i]->id == 9){
                     $school_detail->value = $request->ekstrakurikuler;
                 }
                 $school_detail->save();

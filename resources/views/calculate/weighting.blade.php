@@ -2,7 +2,7 @@
 @section('main')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <div>
-    <p class="text-4xl">Weighting</p>
+    <p class="text-4xl">Pembobotan Kriteria</p>
     <p class="text-base text-gray-500 mt-4 mb-12">Masukkan perbandingan kriteria</p>
 </div>
 @if (Session::has('error'))

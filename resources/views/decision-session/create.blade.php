@@ -1,7 +1,7 @@
 @extends('layout/main')
 @section('main')
     <div>
-        <p class="text-4xl">Add Session</p>
+        <p class="text-4xl">Tambah Sesi</p>
     </div>
     <div class="mt-12">
         <form action="{{ route('store-decision-session') }}" method="POST">

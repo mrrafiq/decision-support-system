@@ -3,8 +3,8 @@
     <div class="mb-8">
         <p class="text-4xl capitalize">{{$school->name}}</p>
         <p class="mt-8 text-gray-400 text-sm">Notes:</p>
-        <p class="text-sm text-gray-400"><span class="text-sm text-green-400">Green</span> means benefit, greater are better and less is bad.</p>
-        <p class="text-sm text-gray-400"><span class="text-sm text-red-400">Red</span> means cost, less are better and greater are bad.</p>
+        <p class="text-sm text-gray-400"><span class="text-sm text-green-400">Hijau</span> berarti benefit, semakin besar nilai-nya semakin bagus.</p>
+        <p class="text-sm text-gray-400"><span class="text-sm text-red-400">Merah</span> berarti cost, semakin kecil nilai-nya semakin bagus</p>
     </div>
     <div class="mb-8 bg-gray-100 rounded-[20px] py-10 px-10 w-4/5">
         <form action="{{url('calculate/store/'. $school->id)}}" method="POST">

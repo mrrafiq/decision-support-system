@@ -17,7 +17,6 @@ class DecisionMakerController extends Controller
      */
     public function index()
     {
-        // $data = DecisionMaker::with('user')->get();
         $data = DecisionMaker::with(['user', 'session'])->get();
         return view('/decision-maker/index',[
             'title' => 'Decision Maker',

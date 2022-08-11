@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl mb-8">Calculate</p>
+        <p class="text-4xl mb-8">Perhitungan</p>
     </div>
     @role('decision_maker')
         @if ($decision_maker == null)
