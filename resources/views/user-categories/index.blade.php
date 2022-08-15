@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">User Categories</p>
+        <p class="text-4xl">Session Categories</p>
     </div>
     @foreach ($data as $item)
     <div class="mt-8 mb-12">
@@ -27,7 +27,7 @@
                         No
                     </th>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
-                        Category
+                        Kategori
                     </th>
                 </tr>
             </thead>

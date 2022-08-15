@@ -78,8 +78,8 @@ class DatabaseSeeder extends Seeder
         $dm3->assignRole($decision_maker);
 
 
-        DecisionSession::create(['name' => 'Pertama']);
-        DecisionSession::create(['name' => 'Kedua']);
+        DecisionSession::create(['name' => 'Perhitungan Budi']);
+        // DecisionSession::create(['name' => 'Kedua']);
 
         DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.5]);
         DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.7]);

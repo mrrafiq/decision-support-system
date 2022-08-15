@@ -40,7 +40,7 @@
                         <select class="flex item-center border px-2" name="{{$user_categories[$i]->category->name}}_{{$j}}" id="{{$user_categories[$i]->category->name}}_{{$j}}" required>
                             <option value="">-</option>
                             @foreach ($scale as $item)
-                                <option value="{{$item->point}}">{{$item->point}} - {{$item->status}}</option>
+                                <option value="{{$item->point}}" {{($item->point== 1) ? 'selected' : ''}}>{{$item->point}} - {{$item->status}}</option>
                             @endforeach
                         </select><br>
                     @endfor

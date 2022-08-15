@@ -1,6 +1,7 @@
 @extends('layout/main')
 @section('main')
-    <p class="text-4xl">Welcome</p>
+    <p class="text-4xl mb-4">Welcome, {{($dm == 'Admin') ? 'Admin' : $dm->user->username}}!</p>
+    <hr>
     @role('decision_maker')
     @if (count($data) != 0)
         <p class="mt-6 mb-3 text-lg">Berikut merupakan hasil perhitungan akhir dari masing-masing pembuat keputusan.</p>
@@ -84,5 +85,69 @@
             </table>
         @endif
     @endif
+    @endrole
+    @role('administrator')
+        <div class="mt-12 flex gap-8 w-full justify-start">
+            <div class="bg-gray-50 px-4 py-4 w-1/3 border-2 border-gray-100 rounded-lg">
+                <p>Jumlah Sesi</p>
+                <hr>
+                <p class="font-bold text-2xl ">{{count($session)}}</p>
+            </div>
+            <div class="bg-gray-50 px-4 py-4 w-1/3 border-2 border-gray-100 rounded-lg">
+                <p>Jumlah Decision Maker</p>
+                <hr>
+                <p class="font-bold text-2xl ">{{count($dm_total)}}</p>
+            </div>
+            <div class="bg-gray-50 px-4 py-4 w-1/3 border-2 border-gray-100 rounded-lg">
+                <p>Jumlah Sekolah</p>
+                <hr>
+                <p class="font-bold text-2xl ">{{$school}}</p>
+            </div>
+        </div>
+        @if (count($data) != 0)
+            <p class="text-lg mt-12 text-gray-400">Berikut merupakan sesi yang telah selesai melakukan perhitungan</p>
+            <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5 mt-6">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            Id
+                        </th>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            Nama Sesi
+                        </th>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            Detail
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    @foreach ($data as $data)
+                        <tr>
+                            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                {{$data->id}}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                {{$data->name}}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                                <a href="{{url('decision-session/show/' . $data->id)}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-500 hover:scale-125 mr-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+        <div class="mt-8 bg-red-50 px-4 py-4 basis-1/2 border-2 border-red-100 rounded-lg">
+            <p>Belum ada sesi yang selesai melakukan perhitungan!
+            </p>
+        </div>
+        @endif
     @endrole
 @endsection

@@ -1,7 +1,7 @@
 @extends('layout/main')
 @section('main')
     <div>
-        <p class="text-4xl">Add Categories</p>
+        <p class="text-4xl">Edit Categories</p>
     </div>
     <div class="mt-12">
         <div class="w-full bg-neutral-100 px-10 py-10 rounded-lg">

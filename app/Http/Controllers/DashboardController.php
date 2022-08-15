@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Borda;
 use App\Models\DecisionMaker;
 use App\Models\UserCategories;
+use App\Models\DecisionSession;
+use App\Models\School;
 
 class DashboardController extends Controller
 {
@@ -18,25 +20,36 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $dm = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $dm = DecisionMaker::with('user')->where('user_id', Auth::user()->id)->first();
         $borda = null;
         if($dm !== null){
             $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
             $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
+            $session = [];
 
             return view('dashboard/index', [
                 'title' => 'Dashboard',
                 'categories' => $user_categories,
+                'session' => $session,
+                'dm' => $dm,
                 'data' => $borda
             ]);
         }
         else{
-            $borda = [];
+            $session = DecisionSession::select('id')->get();
+            $borda = Borda::join('decision_sessions', 'borda.session_id', '=', 'decision_sessions.id')->select('decision_sessions.id', 'decision_sessions.name')->groupBy('decision_sessions.name', 'decision_sessions.id')->whereIn('session_id', $session)->get();
             $user_categories = [];
+            $dm_total = DecisionMaker::get();
+            $school = School::count();
+
             return view('dashboard/index', [
                 'title' => 'Dashboard',
                 'data' => $borda,
+                'dm' => 'Admin',
                 'categories' => $user_categories,
+                'session' => $session,
+                'dm_total' => $dm_total,
+                'school' => $school
             ]);
         }
     }

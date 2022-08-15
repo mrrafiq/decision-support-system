@@ -51,6 +51,7 @@
                     <span class="ml-2 text-sm tracking-wide truncate">Sekolah</span>
                 </a>
             </li>
+            @role('decision_maker')
             <li>
                 <a href="{{route('calculate')}}"
                     class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Calculate' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
@@ -62,6 +63,7 @@
                     <span class="ml-2 text-sm tracking-wide truncate">Perhitungan</span>
                 </a>
             </li>
+            @endrole
             @role('administrator')
                 <li class="px-5 hidden md:block">
                     <div class="flex flex-row items-center mt-5 h-8">
