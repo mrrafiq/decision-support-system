@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('calculates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('decision_maker_id')->constrained();
+            $table->foreignId('decision_maker_id')->constrained()->onDelete('cascade');
             $table->foreignId('session_id')->constrained('decision_sessions')->onDelete('cascade');
             $table->foreignId('school_id')->constrained();
             $table->integer('rank');

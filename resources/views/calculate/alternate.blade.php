@@ -25,7 +25,7 @@
 
                     <div class=" ml-4 flex items-center border-2 py-2 px-3 rounded-2xl">
                         @if ($user_categories[$i]->category->id == 1)
-                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1">
+                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="999">
                         @else
                             <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="10">
                         @endif

@@ -4,7 +4,7 @@
     <hr>
     @role('decision_maker')
     @if (count($data) != 0)
-        <p class="mt-6 mb-3 text-lg">Berikut merupakan hasil perhitungan akhir dari masing-masing pembuat keputusan.</p>
+        <p class="mt-6 mb-3 text-lg">Berikut merupakan hasil perhitungan akhir dari sesi ini.</p>
         <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-4/5">
             <thead>
                 <tr>

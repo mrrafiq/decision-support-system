@@ -73,51 +73,51 @@ class SchoolSeeder extends Seeder
         ]);
 
         //id = 2
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 1,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 2,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 3,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 4,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 5,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 6,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 7,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 8,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 2,
-        //     "category_id" => 9,
-        //     "value" => ""
-        // ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 1,
+            "value" => "PPMTI Batang Kabung merupakan pondok pesantren modern yang terletak di Jl. Adinegoro, Batang Kabung Ganting, Kec. Koto Tangah, Kota Padang."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 2,
+            "value" => "UNGGUL DALAM ILMU, TERAMPIL DALAM AMAL, DAN MULIA DALAM AKHLAK"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 3,
+            "value" => "Mendidik Peserta didik memiliki Kesadaran Ketuhanan (spiritual makrifat); Mengamalkan Al Qur’an dan Sunnah Rasulullah SAW; Mengembangkan potensi peserta didik berjiwa  mandiri, beretos kerja keras, wirausaha, kompetetif dan jujur; Membentuk kader persyarikatan, ummat dan bangsa yang ikhlas, peka, peduli dan bertanggungjawab terhadap kemanusiaan dan lingkungan."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 4,
+            "value" => "kemenag_mandiri"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 5,
+            "value" => "1250000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 6,
+            "value" => "340000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 7,
+            "value" => "Tahfiz Quran, Beasiswa bagi siswa berprestasi"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 8,
+            "value" => "Labor Komputer, UKS, Perpustakaan, Lapangan Olahraga Multifungsi"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 2,
+            "category_id" => 9,
+            "value" => "Bahasa Arab, Bahasa Inggris, Futsal, Bola Voli, Pencak Silat."
+        ]);
 
         //id =3
         SchoolDetail::create([
@@ -166,52 +166,52 @@ class SchoolSeeder extends Seeder
             "value" => "Futsal, Sepak Takraw, Hapkido"
         ]);
 
-        // //id = 4
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 1,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 2,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 3,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 4,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 5,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 6,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 7,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 8,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 4,
-        //     "category_id" => 9,
-        //     "value" => ""
-        // ]);
+        //id = 4
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 1,
+            "value" => "Pondok Pesantren Darul Ulum merupakan pondok pesantren yang terletak di Kalumbuk, Kec. Kuranji, Kota Padang, Sumatera Barat."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 2,
+            "value" => "Berilmu, Beramal dan Bertaqwa serta dilandasi Akhlakul Karimah"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 3,
+            "value" => "Menumbuhkan budaya ilmu, amal, taqwa serta akhlakul karimah."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 4,
+            "value" => "kemenag_mandiri"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 5,
+            "value" => "1330000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 6,
+            "value" => "325000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 7,
+            "value" => "Kitab Kuning, Tahfiz Quran, Dauroh Lughotul Arobiyah."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 8,
+            "value" => "Labor Komputer"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 4,
+            "category_id" => 9,
+            "value" => "Jurnalistik, Leadership, Seni membaca Al-quran"
+        ]);
 
         // //id = 5
         SchoolDetail::create([
@@ -261,98 +261,98 @@ class SchoolSeeder extends Seeder
         ]);
 
         // //id = 6
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 1,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 2,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 3,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 4,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 5,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 6,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 7,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 8,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 6,
-        //     "category_id" => 9,
-        //     "value" => ""
-        // ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 1,
+            "value" => "Pondok Pesantren Sabbihisma merupakan pondok pesantren yang berlokasi di Jl. Anak Air No.60, Batipuh Panjang, Kec. Koto Tangah, Kota Padang, Sumatera Barat."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 2,
+            "value" => "Menyiapkan santri lulusan TMI yang beraqidah kuat, berakhlak mulia, gemar beribadah, berilmu, mandiri, memiliki keahlian dan keterampilan hidup, profesional dan mampu memberi manfaat bagi kehidupan masyarakat."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 3,
+            "value" => "Menerapkan prinsip pendidikan Islam terpadu; Menyusun dan menerapkan kurikulum terpadu; Menerapkan pendidikan dan pembinaan aqidah, akhlak dan ibadah; Menerapkan pendidikan dan pembinaan keilmuwan dan keahlian."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 4,
+            "value" => "kemenag_mandiri"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 5,
+            "value" => "3000000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 6,
+            "value" => "300000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 7,
+            "value" => "Tahfiz Quran"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 8,
+            "value" => "Labor Komputer, Lapangan Olahraga."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 6,
+            "category_id" => 9,
+            "value" => "Futsal, Basket, Voli, Bahasa Arab, Pencak Silat."
+        ]);
 
         // //id = 7
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 1,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 2,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 3,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 4,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 5,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 6,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 7,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 8,
-        //     "value" => ""
-        // ]);
-        // SchoolDetail::create([
-        //     "school_id" => 7,
-        //     "category_id" => 9,
-        //     "value" => ""
-        // ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 1,
+            "value" => "Pondok Pesantren Dar El-Iman merupakan pondok pesantren yang berlokasi di Jl. Gajah Mada Dalam, Komplek BPKP II, Kampung Olo, Kecamatan Nanggalo, Kota Padang."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 2,
+            "value" => "Terwujudnya lulusan yang berakhlak mulia, kreatif, kompetitif dan mandiri."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 3,
+            "value" => "Menanamkan akidah salafus shaleh kepada peserta didik; Membina peserta didik untuk beribadah sesuai dengan alquran dan sunnah; Menanamkan akhlak mulia kepada peserta didik dalam keluarga dan masyarakat; Mengembangkan potensi peserta didik dalam ilmu pengetahuan, bahasa, teknologi dan keterampilan; Membekali peserta didik untuk mencapai lulusan yang berstandar nasional; Membekali peserta didik dengan kemandirian personal."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 4,
+            "value" => "1350000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 5,
+            "value" => "16750000"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 6,
+            "value" => "kemenag_mandiri"
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 7,
+            "value" => "Tahsin, Tahfizh Quran, Pembinaan Akhlak yang intensif, Program Bahasa Asing (Pembiasaan Percakapan Bahasa Arab & Inggris Sehari – hari), Pembinaan Asrama."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 8,
+            "value" => "Asrama pakai AC, Labor IPA dan Komputer, Lapangan olahraga, Studio mini, Bus operasional."
+        ]);
+        SchoolDetail::create([
+            "school_id" => 7,
+            "category_id" => 9,
+            "value" => "Pramuka, IT/ Video dan Design Grafis, Penyiaran, Menulis, Basket, Badminton, Voli, Futsal, Panahan, Takraw. "
+        ]);
 
         // //id = 8
         SchoolDetail::create([
