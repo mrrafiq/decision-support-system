@@ -44,8 +44,8 @@
                 </p>
             </div>
         @else
-            <p class="text-2xl mt-12">Sesi - {{$categories[0]->session->name}}</p>
-            <p class="text-gray-500 mb-6">Berikut merupakan kategori untuk sesi {{$categories[0]->session->name}}</p>
+            <p class="text-2xl mt-8">Sesi - {{$categories[0]->session->name}}</p>
+            <p class="mb-2 text-xl mt-12">Kriteria</p>
             <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5">
                 <thead>
                     <tr>
@@ -53,7 +53,7 @@
                             No
                         </th>
                         <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
-                            Kategori
+                            Kriteria
                         </th>
                     </tr>
                 </thead>
@@ -78,6 +78,86 @@
                                 @else
                                     {{ ucwords(str_replace('_',' ',$data->category->name)) }}
                                 @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+        @if (count($school_session) == 0)
+            <div class="mt-8 bg-red-50 px-4 py-4 basis-1/2 border-2 border-red-100 rounded-lg">
+                <p>Sistem ini butuh alternatif pilihan untuk setiap sesi-nya.
+                    <br>Kamu bisa menghubungi administrator untuk langkah lebih lanjut!
+                </p>
+            </div>
+        @else
+            <p class="mb-2 text-xl mt-12">Sekolah Pilihan</p>
+            <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            No
+                        </th>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            Nama Sekolah
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    @php
+                        $no = 0;
+                    @endphp
+                    @foreach ($school_session as $data)
+                        @php
+                            $no++;
+                        @endphp
+                        <tr>
+                            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                {{$no}}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                               {{$data->school->name}}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+        @if (count($user_session) <= 1)
+            <div class="mt-8 bg-red-50 px-4 py-4 basis-1/2 border-2 border-red-100 rounded-lg">
+                <p>Sistem ini butuh decision maker yang lebih dari satu untuk setiap sesi-nya.
+                    <br>Kamu bisa menghubungi administrator untuk langkah lebih lanjut!
+                </p>
+            </div>
+        @else
+            <p class="mb-2 text-xl mt-12">Decision Maker</p>
+            <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            No
+                        </th>
+                        <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                            Nama User
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    @php
+                        $no = 0;
+                    @endphp
+                    @foreach ($user_session as $data)
+                        @php
+                            $no++;
+                        @endphp
+                        <tr>
+                            <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                {{$no}}
+                            </td>
+                            <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                               {{$data->user->username}}
                             </td>
                         </tr>
                     @endforeach

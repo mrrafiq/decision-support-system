@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\DecisionSession;
 use App\Models\DecisionMaker;
 use App\Models\Borda;
+use App\Models\Aras;
+use App\Models\Ahp;
+use App\Models\Calculate;
+use App\Models\UserCategories;
+use App\Models\SchoolSession;
 use Illuminate\Http\Request;
 
 class DecisionSessionController extends Controller
@@ -61,12 +66,26 @@ class DecisionSessionController extends Controller
         $decision_maker = DecisionMaker::with('user')->where('session_id', $id)->get();
         $session = DecisionSession::where('id', $id)->first();
         $borda = Borda::with('school')->where('session_id', $id)->get();
-        // dd($borda);
+        $category = UserCategories::where('session_id', $id)->get();
+        $school = SchoolSession::where('session_id', $id)->get();
+        // dd($school);
+
+        $weight = null;
+        $message = null;
+        foreach($decision_maker as $key){
+            $weight += $key->weight;
+        }
+        if ($weight < 1) {
+            $message = "Pastikan jumlah bobot decision maker mencapai angka 1! Perhitungan Belum Dapat Dilakukan!";
+        }
         return view('decision-session.show', [
             'title' => 'Sessions',
             'session' => $session,
             'data' => $decision_maker,
-            'borda' => $borda
+            'borda' => $borda,
+            'category' => $category,
+            'school' => $school,
+            'message' => $message
         ]);
     }
 
@@ -121,8 +140,10 @@ class DecisionSessionController extends Controller
         for ($i=1; $i <= count($data)-1; $i++) {
             $input = DecisionMaker::where('user_id', $data[$i])->first();
             $input->session_id = $id;
+            $input->weight = null;
             $input->save();
         }
+
         return redirect()->route('show-decision-session', ['id' => $id]);
     }
 
@@ -140,19 +161,45 @@ class DecisionSessionController extends Controller
     public function updateDecisionMaker(Request $request, $id)
     {
         $dm = DecisionMaker::where('id', $id)->first();
-        $dm->session_id = $request->session_id;
-        $dm->weight = $request->weight;
-        $dm->save();
 
-        return redirect()->route('show-decision-session', ['id' => $request->session_id]);
+        //convert data type from string into double
+        $weight = str_replace(',','.', $request->weight);
+
+        //check the capability of max number of weight
+        $check = DecisionMaker::where('session_id', $request->session_id)->whereNot('id', $id)->get();
+        $count = null;
+        foreach ($check as $key) {
+            $count += $key->weight;
+        }
+        $count += $request->weight;
+
+        if ($count <= 1) {
+            $dm->session_id = $request->session_id;
+            $dm->weight = $weight;
+            $dm->save();
+            return redirect()->route('show-decision-session', ['id' => $request->session_id]);
+        }
+        else{
+            return redirect()->route('edit-dm-session', ['id' => $id])->with('error', 'Jumlah nilai bobot harus bernilai <1.');
+        }
     }
 
     public function deleteDecisionMaker($id)
     {
         $dm = DecisionMaker::where('id', $id)->first();
+
+
+        Aras::where('decision_maker_id', $id)->where('session_id', $dm->session_id)->delete();
+        // $aras->delete();
+
+        Ahp::where('decision_maker_id', $id)->where('session_id', $dm->session_id)->delete();
+        // $ahp->delete();
+
+        Calculate::where('decision_maker_id', $id)->where('session_id', $dm->session_id)->delete();
+        // $calculate->delete();
+
         $dm->session_id = null;
         $dm->save();
-
         return redirect('decision-session');
     }
 

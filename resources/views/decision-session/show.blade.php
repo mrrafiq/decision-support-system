@@ -40,10 +40,17 @@
         </table>
     </div>
     @endif
+
+    @if ($message != null)
+    <div class="basis-1/2 border-2 mt-6 mb-6 rounded-2xl border-red-200 text-red-900 py-2 px-3 bg-red-100"
+        role="alert">
+        {{ $message }}
+    </div>
+    @endif
     <div class="mt-12 mb-8">
         <p class="text-xl">Decision Maker</p>
         @if (count($borda) == 0)
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between w-3/5">
                 <div></div>
                 <button
                     class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
@@ -51,7 +58,7 @@
                 </button>
             </div>
         @endif
-        <table class="w-full text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
+        <table class="w-3/5 text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
             <thead>
                 <tr>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
@@ -62,9 +69,6 @@
                     </th>
                     <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
                         Bobot
-                    </th>
-                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
-                        Created at
                     </th>
                     @if (count($borda) == 0)
                     <th class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
@@ -85,9 +89,6 @@
                     </td>
                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                         {{ $data->weight }}
-                    </td>
-                    <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                        {{ $data->created_at }}
                     </td>
                     <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                         @if (count($borda) == 0)
@@ -116,6 +117,113 @@
                     </td>
                 </tr>
                 @endforeach
+            </tbody>
+        </table>
+    </div>
+    {{-- To display criteria of this session --}}
+    <div class="mt-12 mb-8">
+        <p class="text-xl">Kriteria Penilaian</p>
+        @if (count($category) == 0)
+        <div class="flex items-center justify-between w-3/5">
+            <div></div>
+            <button
+                class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
+                <a href="{{ url('user-categories/create/'.$session->id) }}">Add+</a>
+            </button>
+        </div>
+        @endif
+        @if (count($borda) == 0)
+            @if (count($category) != 0)
+            <div class="flex items-center justify-between w-3/5">
+                <div></div>
+                <button
+                    class=" px-3 py-2 text-sm font-medium text-white transition bg-yellow-500 rounded hover:scale-110 hover:shadow-xl active:bg-yellow-500 focus:outline-none focus:ring">
+                    <a href="{{ url('user-categories/edit/' . $session->id) }}">Edit</a>
+                </button>
+            </div>
+            @endif
+        @endif
+        <table class="w-3/5 text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        No
+                    </th>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        Kriteria
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200">
+                <?php $no = 0; ?>
+                <?php foreach ($category as $data): $no++ ?>
+                <tr>
+                    <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                        {{ $no }}
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        @if ($data->category->name == 'deskripsi')
+                            Jarak
+                        @elseif ($data->category->name == 'visi')
+                            Visi dan Misi
+                        @else
+                            {{ ucwords(str_replace('_',' ',$data->category->name)) }}
+                        @endif
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+
+    {{-- To display criteria of this session --}}
+    <div class="mt-12 mb-8">
+        <p class="text-xl">Sekolah Pilihan</p>
+        @if (count($school) == 0)
+        <div class="flex items-center justify-between w-3/5">
+            <div></div>
+            <button
+                class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
+                <a href="{{ url('school-session/create/'.$session->id) }}">Add+</a>
+            </button>
+        </div>
+        @endif
+        @if (count($borda) == 0)
+            @if (count($school) != 0)
+            <div class="flex items-center justify-between w-3/5">
+                <div></div>
+                <button
+                    class=" px-3 py-2 text-sm font-medium text-white transition bg-yellow-500 rounded hover:scale-110 hover:shadow-xl active:bg-yellow-500 focus:outline-none focus:ring">
+                    <a href="{{ url('school-session/edit/'.$session->id) }}">Edit</a>
+                </button>
+            </div>
+            @endif
+        @endif
+        <table class="w-3/5 text-sm divide-y-2 mt-6 rounded-2xl divide-gray-200 bg-gray-100">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        No
+                    </th>
+                    <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
+                        Nama Sekolah
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-gray-200">
+                <?php $no = 0; ?>
+                <?php foreach ($school as $data): $no++ ?>
+                <tr>
+                    <td class="px-4 py-2 text-gray-900 whitespace-nowrap">
+                        {{ $no }}
+                    </td>
+                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                        {{$data->school->name}}
+                    </td>
+                </tr>
+                <?php endforeach ?>
             </tbody>
         </table>
     </div>

@@ -95,19 +95,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('user-categories')}}"
-                        class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Categories' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
-                        <span class="inline-flex justify-center items-center ml-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Session-Categories</span>
-                    </a>
-                </li>
-                <li>
                     <a href="{{route('category')}}"
                         class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6 {{ $title == 'Admin-Category' ? 'border-gray-800 text-white-800 bg-gray-600' : '' }}">
                         <span class="inline-flex justify-center items-center ml-4">
@@ -115,7 +102,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                             </svg>
                         </span>
-                        <span class="ml-2 text-sm tracking-wide truncate">Category Management</span>
+                        <span class="ml-2 text-sm tracking-wide truncate">Criteria Management</span>
                     </a>
                 </li>
 

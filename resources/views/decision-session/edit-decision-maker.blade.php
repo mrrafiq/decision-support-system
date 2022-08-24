@@ -3,6 +3,12 @@
     <div>
         <p class="text-4xl">Edit Decision Maker Session</p>
     </div>
+    @if (Session::has('error'))
+        <div class="basis-1/2 border-2 mt-6 mb-6 rounded-2xl border-red-200 text-red-900 py-2 px-3 bg-red-100"
+            role="alert">
+            {{ Session::get('error') }}
+        </div>
+    @endif
     <div class="mt-12">
         <form action="{{ url('decision-session/update-dm/'.$data->id) }}" method="POST">
             {{ csrf_field() }}
@@ -14,7 +20,7 @@
                 </select>
             </div>
             <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                <input id="weight" class=" pl-2 w-full outline-none border-none" type="text" name="weight" placeholder="Bobot"
+                <input id="weight" class=" pl-2 w-full outline-none border-none" type="number" min="0.1" max="0.9" step="0.1" name="weight" placeholder="Contoh: 0.5"
                     required value="{{$data->weight}}" />
             </div>
             <div class="flex items-center justify-between max-w-full">

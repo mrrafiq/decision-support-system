@@ -16,7 +16,7 @@ class AhpController extends Controller
     {
         $decision_maker = DecisionMaker::where('id', $id)->first();
         $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
-        $ahp = Ahp::where('decision_maker_id', $id)->get();
+        $ahp = Ahp::where('decision_maker_id', $id)->where('session_id', $decision_maker->session_id)->get();
         $scale = Scale::get();
         // dd($user_categories);
 

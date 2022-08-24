@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Calculate;
 use App\Models\DecisionMaker;
 use App\Models\DecisionSession;
+use App\Models\SchoolSession;
 use App\Models\UserCategories;
 use App\Models\Ahp;
 use App\Models\Aras;
@@ -23,14 +24,19 @@ class CalculateController extends Controller
      */
     public function index()
     {
+        $this->borda(3);
         $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
         $check = null;
         $calculate = null;
         $ahp = null;
+        $weight = null;
         if($decision_maker != null){
             $check = DecisionMaker::where('session_id', $decision_maker->session_id)->get();
             $calculate = Calculate::with('school')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
             $ahp = Ahp::with('category')->where('decision_maker_id', $decision_maker->id)->where('session_id', $decision_maker->session_id)->get();
+            foreach($check as $key){
+                $weight += $key->weight;
+            }
         }else{
             return view('calculate.index', [
                 'title' => 'Calculate',
@@ -38,7 +44,19 @@ class CalculateController extends Controller
                 'message' => 'Silahkan hubungi administrator untuk pengaturan sesi anda!'
             ]);
         }
-        $school = School::first();
+        $school = SchoolSession::where('session_id', $decision_maker->session_id)->first();
+
+        // check if session weight is = 1
+        if($weight < 1){
+            return view('calculate.index', [
+                'title' => 'Calculate',
+                'decision_maker' => $decision_maker,
+                'dm_total' => $check,
+                'school' => $school,
+                'weight' => $weight,
+                'message' => 'Silahkan hubungi administrator untuk pengaturan bobot pada sesi anda!'
+            ]);
+        }
 
         //check if the user is administrator
         if ($check == null) {
@@ -53,6 +71,7 @@ class CalculateController extends Controller
                 'title' => 'Calculate',
                 'dm_total' => $check,
                 'decision_maker' => $decision_maker,
+                'weight' => $weight,
                 'ahp' => $ahp,
                 'school' => $school,
                 'aras' => $calculate
@@ -64,6 +83,7 @@ class CalculateController extends Controller
                 'title' => 'Calculate',
                 'dm_total' => $check,
                 'decision_maker' => $decision_maker,
+                'weight' => $weight,
                 'ahp' => $ahp,
                 'aras' => $calculate
             ]);
@@ -73,6 +93,7 @@ class CalculateController extends Controller
             return view('calculate.index', [
                 'title' => 'Calculate',
                 'dm_total' => $check,
+                'weight' => $weight,
                 'ahp' => $ahp,
                 'decision_maker' => $decision_maker,
                 'aras' => $calculate
@@ -83,6 +104,7 @@ class CalculateController extends Controller
                 'title' => 'Calculate',
                 'dm_total' => $check,
                 'decision_maker' => $decision_maker,
+                'weight' => $weight,
                 'ahp' => $ahp,
                 'school' => $school,
                 'aras' => $calculate
@@ -93,8 +115,8 @@ class CalculateController extends Controller
 
     public function result($id)
     {
-        $schools = School::get();
         $decision_maker = DecisionMaker::where('id', $id)->first();
+        $schools = SchoolSession::where('session_id', $decision_maker->session_id)->get();
         $categories = UserCategories::where('session_id',  $decision_maker->session_id)->get();
         $arr_categories = [];
         foreach ($categories as $key => $value) {
@@ -106,7 +128,7 @@ class CalculateController extends Controller
             for ($j=0; $j < count($categories); $j++) {
                 $aras = Aras::where('decision_maker_id', $decision_maker->id)
                         ->where('category_id', $categories[$j]->category_id)
-                        ->where('school_id', $schools[$i]->id)
+                        ->where('school_id', $schools[$i]->school_id)
                         ->first();
                 array_push($arr_col, $aras->value);
             }
@@ -224,7 +246,7 @@ class CalculateController extends Controller
 
         $school_array = [];
         for ($i=0; $i < count( $schools); $i++) {
-            $temp_array = array("id" => $schools[$i]->id, "value" => $optimum[$i]);
+            $temp_array = array("id" => $schools[$i]->school_id, "value" => $optimum[$i]);
             array_push($school_array, $temp_array);
         }
         // dd($school_array);
@@ -238,7 +260,7 @@ class CalculateController extends Controller
         // dd($utility);
         $school_utility = [];
         for ($i=0; $i < count( $schools); $i++) {
-            $temp_array = array("id" => $schools[$i]->id, "value" => $utility[$i]);
+            $temp_array = array("id" => $schools[$i]->school_id, "value" => $utility[$i]);
             array_push($school_utility, $temp_array);
         }
         $value = [];
@@ -264,7 +286,7 @@ class CalculateController extends Controller
             $calculate->session_id = $decision_maker->session_id;
             $calculate->school_id = $ranked_school[$i]["id"];
             $calculate->rank = $i+1;
-            $calculate->score = $ranked_school[$i]["value"] * $decision_maker->weight;
+            $calculate->score = $ranked_school[$i]["value"];
             $calculate->save();
         }
 
@@ -284,9 +306,9 @@ class CalculateController extends Controller
             $decision_maker [] = $value->id;
         }
 
-        $school = School::get();
+        $school = SchoolSession::where('session_id', $id)->get();
 
-        // the $times is for help calculate score * times
+        // the $times is for help calculate weight * times
         $times =[];
         for ($i=count($school); $i > 0; $i--) {
             $times [] = $i;
@@ -298,12 +320,12 @@ class CalculateController extends Controller
             $temp = [];
 
             for ($j=0; $j < count($school); $j++) {
-                $data = Calculate::where('decision_maker_id', $decision_maker[$i])->where('school_id', $school[$j]->id)->first();
+                $data = Calculate::where('decision_maker_id', $decision_maker[$i])->where('school_id', $school[$j]->school_id)->first();
                 // dd($data);
                 $score = 0;
                 for ($k=0; $k < count($school); $k++) {
                     if ($data->rank == $k+1) {
-                        $score = $data->score * $times[$k];
+                        $score = $dm[$i]->weight * $times[$k];
                     }
                 }
                 array_push($temp, ['rank'=> $data->rank, 'school_id' => $data->school_id,'score' => $score]);
@@ -319,7 +341,7 @@ class CalculateController extends Controller
                 $temp_total += $rank[$j][$i]['score'];
             }
 
-            array_push($total, ['school_id' => $school[$i]->id, 'total' => $temp_total]);
+            array_push($total, ['school_id' => $school[$i]->school_id, 'total' => $temp_total]);
         }
         // dd($total);
 

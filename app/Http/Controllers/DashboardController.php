@@ -9,6 +9,7 @@ use App\Models\Borda;
 use App\Models\DecisionMaker;
 use App\Models\UserCategories;
 use App\Models\DecisionSession;
+use App\Models\SchoolSession;
 use App\Models\School;
 
 class DashboardController extends Controller
@@ -22,15 +23,19 @@ class DashboardController extends Controller
     {
         $dm = DecisionMaker::with('user')->where('user_id', Auth::user()->id)->first();
         $borda = null;
+        $school_session = null;
         if($dm !== null){
             $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
             $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
             $session = [];
-
+            $school_session = SchoolSession::with('school')->where('session_id', $dm->session_id)->get();
+            $user_session = DecisionMaker::with('user')->where('session_id', $dm->session_id)->get();
             return view('dashboard/index', [
                 'title' => 'Dashboard',
                 'categories' => $user_categories,
                 'session' => $session,
+                'user_session' => $user_session,
+                'school_session' => $school_session,
                 'dm' => $dm,
                 'data' => $borda
             ]);

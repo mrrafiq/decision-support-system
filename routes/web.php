@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DecisionMakerController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolDetailController;
+use App\Http\Controllers\SchoolSessionController;
 use App\Http\Controllers\UserCategoriesController;
 use App\Http\Controllers\CalculateController;
 use App\Http\Controllers\AhpController;
@@ -102,5 +103,12 @@ Route::group(['middleware' => ['auth']],function () {
         Route::post('/update-dm/{id}', [DecisionSessionController::class, 'updateDecisionMaker'])->name('update-dm-session');
         Route::post('/delete-dm/{id}', [DecisionSessionController::class, 'deleteDecisionMaker'])->name('delete-dm-session');
         Route::delete('/destroy/{id}', [DecisionSessionController::class, 'destroy'])->name('destroy-decision-session');
+    });
+
+    Route::prefix('school-session')->group(function() {
+        Route::get('/create/{id}', [SchoolSessionController::class, 'create'])->name('create-school-session');
+        Route::post('/store/{id}', [SchoolSessionController::class, 'store'])->name('store-school-session');
+        Route::get('/edit/{id}', [SchoolSessionController::class, 'edit'])->name('edit-school-session');
+        Route::post('/update/{id}', [SchoolSessionController::class, 'update'])->name('update-school-session');
     });
 });

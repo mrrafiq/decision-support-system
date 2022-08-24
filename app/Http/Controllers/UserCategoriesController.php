@@ -45,7 +45,7 @@ class UserCategoriesController extends Controller
         $categories = Category::get();
         $session = DecisionSession::where('id', $id)->first();
         return view('user-categories.create',[
-            'title' => 'Categories',
+            'title' => 'Sessions',
             'session' => $session,
             'categories' => $categories
         ]);
@@ -57,6 +57,10 @@ class UserCategoriesController extends Controller
         foreach ($request->all() as $key => $value) {
            $data [] = $value;
         }
+
+        if(count($data) < 3){
+            return redirect()->route('create-categories', ['id' => $id])->with('error', 'Kriteria yang dipilih harus lebih dari satu!');
+        }
         // dd($data);
         for ($i=1; $i <= count($data)-1; $i++) {
             $input = new UserCategories;
@@ -64,7 +68,7 @@ class UserCategoriesController extends Controller
             $input->category_id = $data[$i];
             $input->save();
         }
-        return redirect('/user-categories');
+        return redirect()->route('show-decision-session', ['id' => $id]);
     }
 
     public function edit($id)
@@ -79,7 +83,7 @@ class UserCategoriesController extends Controller
         // dd(array_search(5, $data, true));
         // dd($categories[0]->type);
         return view('user-categories.edit',[
-            'title' => 'Categories',
+            'title' => 'Sessions',
             'data' => $data,
             'session' => $user_categories,
             'categories' => $categories
@@ -92,6 +96,9 @@ class UserCategoriesController extends Controller
         $data = [];
         foreach ($request->all() as $key => $value) {
            $data [] = $value;
+        }
+        if(count($data) < 3){
+            return redirect()->route('edit-categories', ['id' => $id])->with('error', 'Kriteria yang dipilih harus lebih dari satu!');
         }
         // dd($request->all());
 
@@ -115,7 +122,7 @@ class UserCategoriesController extends Controller
                 }
             }
         }
-        return redirect('/user-categories');
+        return redirect()->route('show-decision-session', ['id' => $id]);
     }
 
     // public function destroy(Request $request)

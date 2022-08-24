@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\DecisionMaker;
 use App\Models\DecisionSession;
 use App\Models\UserCategories;
+use App\Models\SchoolSession;
 use App\Models\Scale;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -81,9 +82,9 @@ class DatabaseSeeder extends Seeder
         DecisionSession::create(['name' => 'Perhitungan Budi']);
         // DecisionSession::create(['name' => 'Kedua']);
 
-        DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.5]);
-        DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.7]);
-        DecisionMaker::create(['user_id' => 4, 'session_id' => 1, 'weight' => 0.7]);
+        DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.2]);
+        DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.4]);
+        DecisionMaker::create(['user_id' => 4, 'session_id' => 1, 'weight' => 0.4]);
 
         // DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
@@ -107,6 +108,11 @@ class DatabaseSeeder extends Seeder
         UserCategories::create(['session_id' => 1, 'category_id' => 5]);
         UserCategories::create(['session_id' => 1, 'category_id' => 6]);
         UserCategories::create(['session_id' => 1, 'category_id' => 8]);
+
+        SchoolSession::create(['session_id' => 1, 'school_id' => 1]);
+        SchoolSession::create(['session_id' => 1, 'school_id' => 2]);
+        SchoolSession::create(['session_id' => 1, 'school_id' => 3]);
+        SchoolSession::create(['session_id' => 1, 'school_id' => 4]);
 
         Scale::create(['point' => 0.11, 'status' => "Sangat Tidak Penting"]);
         Scale::create(['point' => 0.14, 'status' => "Jauh Lebih Tidak Penting"]);
