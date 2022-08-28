@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">Session Categories</p>
+        <p class="text-4xl">Session Criteria</p>
     </div>
     @foreach ($data as $item)
     <div class="mt-8 mb-12">

@@ -57,34 +57,34 @@ class DatabaseSeeder extends Seeder
         $user->save();
         $user->assignRole($administrator);
 
-        $dm = new User;
-        $dm->username = 'Andi';
-        $dm->email = 'andi@example.com';
-        $dm->password = Hash::make('password');
-        $dm->save();
-        $dm->assignRole($decision_maker);
+        // $dm = new User;
+        // $dm->username = 'Andi';
+        // $dm->email = 'andi@example.com';
+        // $dm->password = Hash::make('password');
+        // $dm->save();
+        // $dm->assignRole($decision_maker);
 
-        $dm2 = new User;
-        $dm2->username = 'Yanti';
-        $dm2->email = 'yanti@example.com';
-        $dm2->password = Hash::make('password');
-        $dm2->save();
-        $dm2->assignRole($decision_maker);
+        // $dm2 = new User;
+        // $dm2->username = 'Yanti';
+        // $dm2->email = 'yanti@example.com';
+        // $dm2->password = Hash::make('password');
+        // $dm2->save();
+        // $dm2->assignRole($decision_maker);
 
-        $dm3 = new User;
-        $dm3->username = 'Budi';
-        $dm3->email = 'budi@example.com';
-        $dm3->password = Hash::make('password');
-        $dm3->save();
-        $dm3->assignRole($decision_maker);
+        // $dm3 = new User;
+        // $dm3->username = 'Budi';
+        // $dm3->email = 'budi@example.com';
+        // $dm3->password = Hash::make('password');
+        // $dm3->save();
+        // $dm3->assignRole($decision_maker);
 
 
-        DecisionSession::create(['name' => 'Perhitungan Budi']);
+        // DecisionSession::create(['name' => 'Perhitungan Budi']);
         // DecisionSession::create(['name' => 'Kedua']);
 
-        DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.2]);
-        DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.4]);
-        DecisionMaker::create(['user_id' => 4, 'session_id' => 1, 'weight' => 0.4]);
+        // DecisionMaker::create(['user_id' => 2, 'session_id' => 1, 'weight' => 0.2]);
+        // DecisionMaker::create(['user_id' => 3, 'session_id' => 1, 'weight' => 0.4]);
+        // DecisionMaker::create(['user_id' => 4, 'session_id' => 1, 'weight' => 0.4]);
 
         // DecisionMaker::create(['user_id' => 1, 'name' => 'John']);
         // DecisionMaker::create(['user_id' => 1, 'name' => 'Steve']);
@@ -103,16 +103,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call([SchoolSeeder::class]);
 
-        UserCategories::create(['session_id' => 1, 'category_id' => 1]);
-        UserCategories::create(['session_id' => 1, 'category_id' => 2]);
-        UserCategories::create(['session_id' => 1, 'category_id' => 5]);
-        UserCategories::create(['session_id' => 1, 'category_id' => 6]);
-        UserCategories::create(['session_id' => 1, 'category_id' => 8]);
+        // UserCategories::create(['session_id' => 1, 'category_id' => 1]);
+        // UserCategories::create(['session_id' => 1, 'category_id' => 2]);
+        // UserCategories::create(['session_id' => 1, 'category_id' => 5]);
+        // UserCategories::create(['session_id' => 1, 'category_id' => 6]);
+        // UserCategories::create(['session_id' => 1, 'category_id' => 8]);
 
-        SchoolSession::create(['session_id' => 1, 'school_id' => 1]);
-        SchoolSession::create(['session_id' => 1, 'school_id' => 2]);
-        SchoolSession::create(['session_id' => 1, 'school_id' => 3]);
-        SchoolSession::create(['session_id' => 1, 'school_id' => 4]);
+        // SchoolSession::create(['session_id' => 1, 'school_id' => 1]);
+        // SchoolSession::create(['session_id' => 1, 'school_id' => 2]);
+        // SchoolSession::create(['session_id' => 1, 'school_id' => 3]);
+        // SchoolSession::create(['session_id' => 1, 'school_id' => 4]);
 
         Scale::create(['point' => 0.11, 'status' => "Sangat Tidak Penting"]);
         Scale::create(['point' => 0.14, 'status' => "Jauh Lebih Tidak Penting"]);

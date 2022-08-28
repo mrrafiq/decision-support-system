@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">Edit Category</p>
+        <p class="text-4xl">Edit Criteria</p>
     </div>
     <div class="mt-12">
         <form action="{{ url('category/update/'.$data->id) }}" method="POST">

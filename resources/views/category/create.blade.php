@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('main')
     <div>
-        <p class="text-4xl">Add Category</p>
+        <p class="text-4xl">Tambah Criteria</p>
     </div>
     <div class="mt-12">
         <form action="{{ route('store-category') }}" method="POST">

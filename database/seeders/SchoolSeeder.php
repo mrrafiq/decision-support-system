@@ -123,7 +123,7 @@ class SchoolSeeder extends Seeder
         SchoolDetail::create([
             "school_id" => 3,
             "category_id" => 1,
-            "value" => ""
+            "value" => "Pondok Pesantren Modern Dr.H.Abdullah Ahmad PGAI Padang merupakan salah satu pondok pesantren yang ada di Jl. Dr. H. Abdullah Ahmad No.8, Sawahan, Kecamatan Padang Timur, Kota Padang."
         ]);
         SchoolDetail::create([
             "school_id" => 3,
@@ -217,17 +217,17 @@ class SchoolSeeder extends Seeder
         SchoolDetail::create([
             "school_id" => 5,
             "category_id" => 1,
-            "value" => ""
+            "value" => "Pondok Pesantren Kanzul Ulum merupakan pondok pesantren yang berada di Pasir Kandang, Kecamatan Koto Tangah, Kota Padang."
         ]);
         SchoolDetail::create([
             "school_id" => 5,
             "category_id" => 2,
-            "value" => ""
+            "value" => "Meningkatkan keimanan, ketaqwaan, keilmuan dan persaudaraan umat yang dihiasi dengan al-Ahlaq al Karimah serta menumbuhkan kepedulian sosial, agar tercipta kesejahteraan bangsa yang adil, makmur dan merata."
         ]);
         SchoolDetail::create([
             "school_id" => 5,
             "category_id" => 3,
-            "value" => ""
+            "value" => "Membentuk lembaga bimbingan, pembinaan pendidikan ilmu pengetahuan dan teknologi, ilmu agama dan keterampilan sebagai bekal untuk kehidupan mereka dimasa depan."
         ]);
         SchoolDetail::create([
             "school_id" => 5,
