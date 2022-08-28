@@ -85,7 +85,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:categories,name'
+            'name' => 'required'
         ]);
 
         $category = Category::where('id', $id)->first();
