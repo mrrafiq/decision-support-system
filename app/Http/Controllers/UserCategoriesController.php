@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserCategories;
 use App\Models\Category;
 use App\Models\DecisionSession;
+use App\Models\DecisionMaker;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
@@ -40,18 +41,18 @@ class UserCategoriesController extends Controller
         ]);
     }
 
-    public function create($id)
+    public function create()
     {
         $categories = Category::get();
-        $session = DecisionSession::where('id', $id)->first();
+        $decision_maker_id = DecisionMaker::where('user_id', Auth::user()->id)->first();
         return view('user-categories.create',[
             'title' => 'Sessions',
-            'session' => $session,
+            'decision_maker_id' => $decision_maker_id,
             'categories' => $categories
         ]);
     }
 
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         $data = [];
         foreach ($request->all() as $key => $value) {
@@ -59,21 +60,24 @@ class UserCategoriesController extends Controller
         }
 
         if(count($data) < 3){
-            return redirect()->route('create-categories', ['id' => $id])->with('error', 'Kriteria yang dipilih harus lebih dari satu!');
+            // back to the same page
+            return redirect()->route('create-categories')->with('error', 'Kriteria yang dipilih harus lebih dari satu!');
         }
-        // dd($data);
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
+
         for ($i=1; $i <= count($data)-1; $i++) {
             $input = new UserCategories;
-            $input->session_id = $id;
+            $input->decision_maker_id = $decision_maker->id;
             $input->category_id = $data[$i];
             $input->save();
         }
-        return redirect()->route('show-decision-session', ['id' => $id]);
+        return redirect()->route('dashboard');
     }
 
     public function edit($id)
     {
-        $user_categories = UserCategories::where('session_id', $id)->get();
+        $decision_maker_id = DecisionMaker::where('user_id', Auth::user()->id)->first();
+        $user_categories = UserCategories::where('decision_maker_id', $decision_maker_id->id)->get();
         $categories = Category::get();
         $data = [];
         foreach ($user_categories as $key) {
@@ -85,7 +89,7 @@ class UserCategoriesController extends Controller
         return view('user-categories.edit',[
             'title' => 'Sessions',
             'data' => $data,
-            'session' => $user_categories,
+            'decision_maker' => $decision_maker_id,
             'categories' => $categories
         ]);
     }
@@ -93,6 +97,7 @@ class UserCategoriesController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::get();
+        $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
         $data = [];
         foreach ($request->all() as $key => $value) {
            $data [] = $value;
@@ -104,17 +109,17 @@ class UserCategoriesController extends Controller
 
         for ($i=0; $i < count($category); $i++) {
             if (in_array($category[$i]->id, $data)) {
-                $user_categories = UserCategories::where('session_id', $id)
+                $user_categories = UserCategories::where('decision_maker_id', $id)
                                     ->where('category_id', $category[$i]->id)
                                     ->first();
                 if($user_categories == null){
                     $input = new UserCategories;
-                    $input->session_id = $id;
+                    $input->decision_maker_id = $decision_maker->id;
                     $input->category_id = $category[$i]->id;
                     $input->save();
                 }
             }else{
-                $user_categories = UserCategories::where('session_id', $id)
+                $user_categories = UserCategories::where('decision_maker_id', $id)
                                     ->where('category_id', $category[$i]->id)
                                     ->first();
                 if($user_categories != null){
@@ -122,7 +127,7 @@ class UserCategoriesController extends Controller
                 }
             }
         }
-        return redirect()->route('show-decision-session', ['id' => $id]);
+        return redirect()->route('dashboard');
     }
 
     // public function destroy(Request $request)

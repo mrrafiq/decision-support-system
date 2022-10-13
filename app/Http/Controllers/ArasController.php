@@ -19,7 +19,7 @@ class ArasController extends Controller
     public function index($id)
     {
         $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
-        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
+        $user_categories = UserCategories::with('category')->where('decision_maker_id', $decision_maker->id)->get();
         $school = SchoolSession::with('school')->where('school_id', $id)->first();
 
         return view('calculate.alternate',[

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('scale', function (Blueprint $table) {
             $table->id();
             $table->float('point',4,2);
-            $table->string("status");
+            $table->string("status")->nullable();
             $table->timestamps();
         });
     }

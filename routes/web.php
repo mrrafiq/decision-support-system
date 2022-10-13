@@ -50,8 +50,8 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::prefix('user-categories')->group(function () {
         Route::get('/', [UserCategoriesController::class, 'index'])->name('user-categories');
-        Route::get('/create/{id}', [UserCategoriesController::class, 'create'])->name('create-categories');
-        Route::post('/store/{id}', [UserCategoriesController::class, 'store'])->name('store-categories');
+        Route::get('/create', [UserCategoriesController::class, 'create'])->name('create-categories');
+        Route::post('/store', [UserCategoriesController::class, 'store'])->name('store-categories');
         Route::get('/edit/{id}', [UserCategoriesController::class, 'edit'])->name('edit-categories');
         Route::post('/update/{id}', [UserCategoriesController::class, 'update'])->name('update-categories');
         // Route::delete('/destroy/{id}', [UserCategoriesController::class, 'destroy'])->name('destroy-categories');

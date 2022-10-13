@@ -66,7 +66,6 @@ class DecisionSessionController extends Controller
         $decision_maker = DecisionMaker::with('user')->where('session_id', $id)->get();
         $session = DecisionSession::where('id', $id)->first();
         $borda = Borda::with('school')->where('session_id', $id)->get();
-        $category = UserCategories::where('session_id', $id)->get();
         $school = SchoolSession::where('session_id', $id)->get();
         // dd($school);
 
@@ -83,7 +82,6 @@ class DecisionSessionController extends Controller
             'session' => $session,
             'data' => $decision_maker,
             'borda' => $borda,
-            'category' => $category,
             'school' => $school,
             'message' => $message
         ]);
@@ -151,10 +149,11 @@ class DecisionSessionController extends Controller
     {
         $data = DecisionMaker::where('id', $id)->first();
         $session = DecisionSession::get();
+
         return view('decision-session.edit-decision-maker', [
             'title' => 'Sessions',
             'data' => $data,
-            'session' => $session
+            'session' => $session,
         ]);
     }
 

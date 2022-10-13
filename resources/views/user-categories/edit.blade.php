@@ -11,7 +11,7 @@
     @endif
     <div class="mt-12">
         <div class="w-full bg-neutral-100 px-10 py-10 rounded-lg">
-            <form action="{{ url('user-categories/update/'. $session[0]->session_id) }}" method="POST">
+            <form action="{{ url('user-categories/update/'. $decision_maker->id) }}" method="POST">
                 {{ csrf_field() }}
                 @for ($i = 0; $i < count($categories); $i++)
                     @if ($categories[$i]->type !== null)

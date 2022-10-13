@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $school_session = null;
         if($dm !== null){
             $borda = Borda::with('school')->where('session_id', $dm->session_id)->get();
-            $user_categories = UserCategories::with('session', 'category')->where('session_id', $dm->session_id)->get();
+            $user_categories = UserCategories::with('category')->where('decision_maker_id', $dm->id)->get();
             $session = [];
             $school_session = SchoolSession::with('school')->where('session_id', $dm->session_id)->get();
             $user_session = DecisionMaker::with('user')->where('session_id', $dm->session_id)->get();

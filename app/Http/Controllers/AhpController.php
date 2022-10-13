@@ -15,7 +15,7 @@ class AhpController extends Controller
     public function index($id)
     {
         $decision_maker = DecisionMaker::where('id', $id)->first();
-        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
+        $user_categories = UserCategories::with(['category'])->where('decision_maker_id', $decision_maker->id)->get();
         $ahp = Ahp::where('decision_maker_id', $id)->where('session_id', $decision_maker->session_id)->get();
         $scale = Scale::get();
         // dd($user_categories);
@@ -40,7 +40,7 @@ class AhpController extends Controller
             $items[] = $value;
         }
         $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
-        $user_categories = UserCategories::where('session_id', $decision_maker->session_id)->get();
+        $user_categories = UserCategories::where('decision_maker_id', $decision_maker->id)->get();
         $total_categories = count($user_categories);
 
         //getting data from request and place it into an array
@@ -83,6 +83,33 @@ class AhpController extends Controller
         array_push($temp, 1);
         array_push($values, $temp);
         unset($temp);
+
+        // checking the error input on categories
+        $arr_temp = [];
+        for ($i=0; $i < count($values); $i++) {
+            $temp =[];
+            $artemp = [];
+            for ($j=0; $j < count($values); $j++) {
+                array_push($temp, $values[$j][$i]);
+            }
+            arsort($temp);
+            foreach ($temp as $key => $value) {
+                array_push($artemp, $key);
+            }
+            array_push($arr_temp, $artemp);
+        }
+
+        $result = 0;
+        $error_categories = [];
+        for ($i=0; $i < count($values); $i++) {
+            if ($i != (count($values)-1)) {
+                $result = array_diff_assoc($arr_temp[$i], $arr_temp[$i+1]);
+            }
+            if (count($result) != 0) {
+                array_push($error_categories, $i);
+            }
+        }
+        // dd($error_categories);
 
         //get the total of each category vertically
         $total =[];
@@ -175,6 +202,7 @@ class AhpController extends Controller
             return redirect('/calculate');
         }
         else{
+            // return redirect()->back()->withErrors('Kriteria perhitungan yang salah: '.$);
             return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.number_format($cr,2));
         }
     }
