@@ -27,7 +27,7 @@
                     <p class="text-lg">Lakukan penilaian perbandingan berpasangan!</p>
                     <button
                         class="mt-4 px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
-                        <a href="{{ url('calculate/weighting/'. $decision_maker->id) }}">Start Calculate</a>
+                        <a href="{{ url('calculate/weighting/'. $decision_maker->id) }}">Mulai perhitungan</a>
                     </button>
                 </div>
             @else
@@ -36,7 +36,7 @@
                         <p class="text-lg">Lakukan pembobotan kriteria untuk setiap sekolah!</p>
                         <button
                             class="mt-4 px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
-                            <a href="{{url('calculate/alternate/'. $school->school_id)}}">Start</a>
+                            <a href="{{url('calculate/alternate/'. $school->school_id)}}">Mulai Perhitungan</a>
                         </button>
                     </div>
                 @endif

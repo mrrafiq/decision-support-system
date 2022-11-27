@@ -35,16 +35,28 @@
                     </p><br>
                     @endfor
                 </div>
-                <div>
-                    @for ($j = $i+1; $j < count($user_categories); $j++)
-                        <select class="flex item-center border px-2" name="{{$user_categories[$i]->category->name}}_{{$j}}" id="{{$user_categories[$i]->category->name}}_{{$j}}" required>
-                            <option value="">-</option>
-                            @foreach ($scale as $item)
-                                <option value="{{$item->point}}" {{($item->point== 1) ? 'selected' : ''}}>{{$item->point}} - {{$item->status}}</option>
-                            @endforeach
-                        </select><br>
-                    @endfor
-                </div>
+                @if (count($error) == null)
+                    <div>
+                        @for ($j = $i+1; $j < count($user_categories); $j++)
+                            <select class="flex item-center border px-2" name="{{$user_categories[$i]->category->name}}_{{$j}}" id="{{$user_categories[$i]->category->name}}_{{$j}}" required>
+                                @foreach ($scale as $item)
+                                    <option value="{{$item->point}}" {{($item->point== 1) ? 'selected' : ''}}>{{$item->point}} - {{$item->status}}</option>
+                                @endforeach
+                            </select><br>
+                        @endfor
+                    </div>
+                @else
+                    <div>
+                        @for ($j = $i+1; $j < count($user_categories); $j++)
+                            <select class="flex item-center border px-2" name="{{$error[$i]->area}}" id="{{$error[$i]->area}}" required>
+                                @for($k = 0; $k<count($scale); $k++)
+                                    <option value="{{$scale[$k]->point}}" {{($error[$i]->value == $scale[$k]->point) ? 'selected' : ''}}>{{$scale[$k]->point}} - {{$scale[$k]->status}}</option>
+                                @endfor
+                            </select><br>
+                        @endfor
+                    </div>
+                @endif
+                
                 <div>
                     @for ($j = $i+1; $j < count($user_categories); $j++)
                     <p>

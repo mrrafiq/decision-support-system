@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\DecisionMaker;
 use App\Models\UserCategories;
 use App\Models\Scale;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\Models\Ahp;
@@ -20,6 +21,9 @@ class AhpController extends Controller
         $scale = Scale::get();
         // dd($user_categories);
 
+        $error = DB::table('temp_weighting')->where('decision_maker_id', '=', $id)->where('session_id', '=', $decision_maker->session_id)->get();
+        // dd($error);
+
         if(count($ahp) != null){
             return redirect('/calculate');
         }
@@ -28,7 +32,8 @@ class AhpController extends Controller
             'title' => 'Calculate',
             'decision_maker' => $decision_maker,
             'user_categories' => $user_categories,
-            'scale' => $scale
+            'scale' => $scale,
+            'error' => $error
         ]);
     }
 
@@ -42,7 +47,7 @@ class AhpController extends Controller
         $decision_maker = DecisionMaker::where('user_id', Auth::user()->id)->first();
         $user_categories = UserCategories::where('decision_maker_id', $decision_maker->id)->get();
         $total_categories = count($user_categories);
-
+        
         //getting data from request and place it into an array
         $i = 1;
         $j = 1;
@@ -63,6 +68,8 @@ class AhpController extends Controller
         }
         unset($i);
         unset($j);
+
+        // dd(array_keys($data));
 
         // filling another empty spot in $values array
         for ($i=0; $i < count($values); $i++) {
@@ -202,6 +209,26 @@ class AhpController extends Controller
             return redirect('/calculate');
         }
         else{
+            //send the input into db
+            //table = 'temp_weighting'
+            $key_array = array_keys($data);
+            $collection = [];
+            for ($i=0; $i < count($key_array); $i++) { 
+                $collection [] = $key_array[$i];
+            }
+            // dd($collection);
+            DB::table('temp_weighting')->truncate();
+            for ($i=1; $i < count($key_array); $i++) { 
+                DB::table('temp_weighting')->insert(
+                    [
+                        'decision_maker_id' => $id,
+                        'session_id' => $decision_maker->session_id,
+                        'area' => $collection[$i],
+                        'value' => $items[$i]
+                    ]
+                );
+            }
+            
             // return redirect()->back()->withErrors('Kriteria perhitungan yang salah: '.$);
             return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.number_format($cr,2));
         }

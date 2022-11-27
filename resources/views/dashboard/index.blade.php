@@ -145,7 +145,7 @@
                 </div>
             @else
                 <p class="mb-2 text-xl mt-12 font-semibold">Decision Maker</p>
-                <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5">
+                <table class="w-full text-sm divide-y-2 rounded-2xl divide-gray-200 bg-gray-100 w-3/5 mb-6">
                     <thead>
                         <tr>
                             <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">
