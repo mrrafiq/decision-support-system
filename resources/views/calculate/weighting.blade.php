@@ -10,9 +10,10 @@
         role="alert">
         {{ Session::get('error') }}
     </div>
+
 @endif
 <div>
-    <form action="{{url('calculate/process/'. $decision_maker->id)}}" method="POST">
+    <form action="{{url('calculate/process/'. $decision_maker->id)}}" method="POST" id="theForm">
         @csrf
         <hr>
         <div class="mt-4 mb-4 flex grid grid-cols-3 gap-x-12 font-bold">
@@ -63,7 +64,7 @@
         <div class="mt-4 flex items-center justify-between mb-8">
             <div>
             </div>
-            <button type="submit"
+            <button type="submit" id="submitBtn"
                 class=" px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-indigo-500 focus:outline-none focus:ring">
                 Submit
             </button>

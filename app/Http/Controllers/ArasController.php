@@ -45,7 +45,7 @@ class ArasController extends Controller
         foreach ($school as $key => $value) {
             $arr_school [] = $value->school_id;
         }
-        $user_categories = UserCategories::with(['category'])->where('session_id', $decision_maker->session_id)->get();
+        $user_categories = UserCategories::with(['category'])->where('decision_maker_id', $decision_maker->id)->get();
         // dd($user_categories);
 
 

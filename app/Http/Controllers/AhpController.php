@@ -228,9 +228,12 @@ class AhpController extends Controller
             //     );
             // }
 
-            // return redirect()->back()->withErrors('Kriteria perhitungan yang salah: '.$);
-            // return redirect()->route('weighting', ['id' => $id])->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.number_format($cr,2));
-            echo '<script>alert("Input anda tidak valid!");</script>';
+            // return redirect()->back()->withErrors('Kriteria perhitungan yang salah: ');
+            // return back()->with('error', 'Data yang anda inputkan tidak konsisten. Harap lakukan input dengan penuh pertimbangan! Nilai CR = '.number_format($cr,2));
+            // echo '<script>alert("Input anda tidak valid!");</script>';
+            // return back()->withInput();
+            echo '<script type="text/javascript">alert("review your answer"); history.back()</script>';
+            
         }
     }
 }

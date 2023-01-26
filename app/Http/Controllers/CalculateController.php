@@ -117,7 +117,7 @@ class CalculateController extends Controller
     {
         $decision_maker = DecisionMaker::where('id', $id)->first();
         $schools = SchoolSession::where('session_id', $decision_maker->session_id)->get();
-        $categories = UserCategories::where('session_id',  $decision_maker->session_id)->get();
+        $categories = UserCategories::where('decision_maker_id',  $decision_maker->id)->get();
         $arr_categories = [];
         foreach ($categories as $key => $value) {
             $arr_categories [] = $value->category_id;
@@ -139,7 +139,7 @@ class CalculateController extends Controller
         $arr_null = [];
         // calling type value of each user categories
         $type = UserCategories::join('categories', 'user_categories.category_id', '=', 'categories.id')
-                    ->where('user_categories.session_id', $decision_maker->session_id)
+                    ->where('user_categories.decision_maker_id', $decision_maker->id)
                     ->get();
         //find max or min of each data in $arr_row then add it into $arr_null
         for ($i=0; $i < count($categories); $i++) {

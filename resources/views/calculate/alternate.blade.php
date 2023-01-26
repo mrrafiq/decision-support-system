@@ -10,9 +10,9 @@
         <form action="{{url('calculate/store/'. $school->school->id)}}" method="POST">
             @csrf
             @for ($i = 0; $i < count($user_categories); $i++)
-                <div class="flex mb-4 justify-between w-4/5">
-                    <div>
-                        <p class="first-letter:uppercase text-lg {{$user_categories[$i]->category->type == 0 ? 'text-red-600' : 'text-green-600'}}">
+                <div class="flex grid grid-cols-5 gap-4 mb-5 h-14">
+                    <div class="col-span-3">
+                        <p class="first-letter:uppercase text-lg  {{$user_categories[$i]->category->type == 0 ? 'text-red-600' : 'text-green-600'}}">
                             @if ($user_categories[$i]->category->id == 1)
                                 Berapa jarak rumah anda ke sekolah ini? (Km)
                             @elseif ($user_categories[$i]->category->id == 3)
@@ -22,17 +22,26 @@
                             @endif
                         </p>
                     </div>
+                    <div class="flex items-center justify-between">
+                        <div></div>
+                        <div class="w-4/5 border-2 items-center bg-slate-50 h-full p-4">
+                            @if ($user_categories[$i]->category->id == 1)
+                                <input class="border-none w-full h-full bg-transparent items-center" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="999">
+                            @else
+                                <input class="border-none w-full h-full bg-transparent items-center" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="10">
+                            @endif
+                        </div>
+                        <div></div>
+                    </div>
 
-                    <div class=" ml-4 flex items-center border-2 py-2 px-3 rounded-2xl">
-                        @if ($user_categories[$i]->category->id == 1)
-                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="999">
-                        @else
-                            <input class="border-none bg-transparent" required type="number" name="category_{{$user_categories[$i]->category->id}}" id="category_{{$user_categories[$i]->category->id}}" min="1" max="10">
+                    <div class="ml-4 items-end">
+                        @if ($user_categories[$i]->category->id != 1)
+                            <p class="text-gray-500">Penilaian 1-10</p>
                         @endif
                     </div>
                 </div>
             @endfor
-            <div class="flex items-center justify-between w-4/5">
+            <div class="flex items-center justify-between">
                 <div></div>
                 <button type="submit" class="mt-4 px-3 py-2 text-sm font-medium text-white transition bg-sky-500 rounded hover:scale-110 hover:shadow-xl active:bg-sky-500 focus:outline-none focus:ring">
                     Submit
