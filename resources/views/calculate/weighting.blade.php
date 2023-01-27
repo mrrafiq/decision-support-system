@@ -26,6 +26,7 @@
                 <div>
                     @for ($j = $i+1; $j < count($user_categories); $j++)
                     <p>
+                        {{-- bug --}}
                         @if ($user_categories[$i]->category_id == 1)
                             Jarak
                         @elseif ($user_categories[$i]->category_id == 3)
@@ -48,7 +49,9 @@
                 <div>
                     @for ($j = $i+1; $j < count($user_categories); $j++)
                     <p>
-                        @if ($user_categories[$j]->category_id == 3)
+                        @if ($user_categories[$i]->category_id == 1)
+                            Jarak
+                        @elseif ($user_categories[$j]->category_id == 3)
                             Visi dan Misi
                         @else
                             {{ucwords(str_replace('_', ' ',$user_categories[$j]->category->name))}}
